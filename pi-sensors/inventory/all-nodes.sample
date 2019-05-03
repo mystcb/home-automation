@@ -1,0 +1,9 @@
+[sensors]
+sensor1.host.example.com      ansible_host=127.0.0.1 door_sensor=no  temp_sensor=yes device_location=loc1 device_name=sensor1 temp_offset=0 
+sensor2.host.example.com      ansible_host=127.0.0.2 door_sensor=yes temp_sensor=yes device_location=loc2 device_name=sensor1 temp_offset=0    gpio_pin=16  door_name=doorname
+sensor3.host.example.com      ansible_host=127.0.0.3 door_sensor=no  temp_sensor=no  device_location=loc3 device_name=sensor1 
+
+[sensors:vars]
+ansible_ssh_user=username
+ansible_ssh_private_key=keyfile
+ansible_python_interpreter=/usr/bin/python3

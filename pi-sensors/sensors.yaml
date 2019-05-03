@@ -1,0 +1,102 @@
+- hosts: sensors
+  become: true
+  tasks:
+    - meta: flush_handlers
+
+    - name: Import Secrets
+      include_vars: secrets.yaml
+
+    - name: Ensure hostname is set
+      hostname: name={{ inventory_hostname }}
+      when: not inventory_hostname is match('(\d{1,3}\.){3}\d{1,3}')
+
+    - name: Deploy the SSH Key
+      authorized_key: user=pi
+                      key="{{ lookup('file','/Users/colin/.ssh/id_ed25519.pub') }}"
+                      state=present
+
+    - name: Update hosts file with hostname
+      lineinfile:
+        dest=/etc/hosts
+        regexp="^{{ ansible_default_ipv4.address }}.+$"
+        line="{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+
+    - name: Configure the MOTD
+      template: src=templates/motd.j2 dest=/etc/motd owner=root group=root mode=0644
+
+    - name: Enable I2C on boot
+      lineinfile:
+        dest=/boot/config.txt
+        regexp="^dtparam=i2c_arm=on"
+        line="dtparam=i2c_arm=on"
+      register: reboot
+
+    - name: Enable modules on i2c-bcm2708 and i2c-dev boot
+      lineinfile:
+        dest=/etc/modules
+        regexp="^{{ item }}"
+        line="{{ item }}"
+      with_items:
+        - i2c-bcm2708
+        - i2c-dev        
+      register: reboot
+
+    - name: Reboot on enable of I2C (if required)
+      reboot:
+        reboot_timeout: 120
+        test_command: mount
+      when: reboot.changed
+
+    - name: Update packages on the sensors
+      apt: update_cache=yes
+
+    - name: Install packages
+      apt: 
+        name: 
+          - python3
+          - python3-pip
+          - python3-gpiozero
+          - i2c-tools
+          - libi2c-dev
+          - git
+        state: present
+
+    - name: Get requirements from python3-pip
+      pip: 
+        executable: /usr/bin/pip3
+        name:
+          - paho-mqtt
+          - bme680
+          - smbus
+
+    - name: Install environmental sensor package
+      block:
+        - name: Copy environmental sensor scripts
+          copy: src=code/bme680sensor/bme680sensor.py dest=/usr/local/bin/bme680sensor owner=root group=root mode=0755
+        - name: Copy environmental sensor service scripts
+          copy: src=code/bme680sensor/bme680sensor.service dest=/etc/systemd/system/bme680sensor.service owner=root group=root mode=0644
+        - name: Copy the environmental sensor config to home
+          template: src=code/bme680sensor/bme680sensor.json.j2 dest=/home/pi/bme680sensor.json owner=pi group=pi mode=0644
+        - name: Start and enable the environmental sensor service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: bme680sensor
+      when: temp_sensor == "yes"
+
+    - name: Install door sensor package
+      block:
+        - name: Copy door sensor scripts
+          copy: src=code/doorsensor/doorsensor.py dest=/usr/local/bin/doorsensor owner=root group=root mode=0755
+        - name: Copy door sensor service scripts
+          copy: src=code/doorsensor/doorsensor.service dest=/etc/systemd/system/doorsensor.service owner=root group=root mode=0644
+        - name: Copy the door sensor config to home
+          template: src=code/doorsensor/doorsensor.json.j2 dest=/home/pi/doorsensor.json owner=pi group=pi mode=0644
+        - name: Start and enable the environmental sensor service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: doorsensor
+      when: door_sensor == "yes"

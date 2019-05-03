@@ -1,0 +1,11 @@
+[Unit]
+Description=FR24 Stats Pusher - MQTT
+After=network.target
+
+[Service]
+Type=idle
+ExecStart=/usr/local/bin/fr24-stats-push -C /home/pi/fr24-stats-push.json
+User=pi
+
+[Install]
+WantedBy=multi-user.target

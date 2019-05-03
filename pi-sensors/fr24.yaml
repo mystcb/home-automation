@@ -1,0 +1,46 @@
+## Currently doesn't fully work because the FR24 image puts the disk into ReadOnly mode.
+## Ensure to login and run "sudo mount -o remount,rw /" before running
+- hosts: fr24
+  become: true
+  tasks:
+    - meta: flush_handlers
+
+    - name: Import Secrets
+      include_vars: secrets.yaml
+
+    - name: Ensure hostname is set
+      hostname: name={{ inventory_hostname }}
+      when: not inventory_hostname is match('(\d{1,3}\.){3}\d{1,3}')
+
+    - name: Deploy the SSH Key
+      authorized_key: user=pi
+                      key="{{ lookup('file','/Users/colin/.ssh/id_ed25519.pub') }}"
+                      state=present
+
+    - name: Update hosts file with hostname
+      lineinfile:
+        dest=/etc/hosts
+        regexp="^{{ ansible_default_ipv4.address }}.+$"
+        line="{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+
+    - name: Get requirements from python3-pip
+      pip: 
+        executable: /usr/bin/pip3
+        name:
+          - paho-mqtt
+
+    - name: Copy FR24 Stats Push scripts
+      copy: src=code/fr24-stats-push/fr24-stats-push.py dest=/usr/local/bin/fr24-stats-push owner=root group=root mode=0755
+    
+    - name: Copy FR24 Stats Push service scripts
+      copy: src=code/fr24-stats-push/fr24-stats-push.service dest=/etc/systemd/system/fr24-stats-push.service owner=root group=root mode=0644
+        
+    - name: Copy the FR24 Stats Push config to home
+      template: src=code/fr24-stats-push/fr24-stats-push.json.j2 dest=/home/pi/fr24-stats-push.json owner=pi group=pi mode=0644
+    
+    - name: Start and enable the FR24 Stats Push service
+      systemd:
+        state: started
+        enabled: yes
+        daemon_reload: yes
+        name: fr24-stats-push

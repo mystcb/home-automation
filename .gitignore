@@ -1,0 +1,11 @@
+# Stop uploading secrets
+pi-sensors/secrets.yaml
+
+# Stop the upload of the inventory
+pi-sensors/inventory/all-nodes
+
+# Stop any random retry files
+pi-sensors/*.retry
+
+# Editor files
+.vscode
