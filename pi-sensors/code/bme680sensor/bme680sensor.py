@@ -9,7 +9,7 @@
 # Import all the modules required
 import paho.mqtt.client as mqtt
 import json
-import bme680
+import bme680 # pylint: disable=import-error
 import time
 import argparse
 import uuid

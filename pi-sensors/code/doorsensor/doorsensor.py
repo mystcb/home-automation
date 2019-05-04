@@ -7,7 +7,7 @@
 # a simple swtches, attached to a Raspberry Pi Zero W
 
 # Import all the modules required
-import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO # pylint: disable=import-error
 import json
 import time
 import paho.mqtt.client as mqtt
