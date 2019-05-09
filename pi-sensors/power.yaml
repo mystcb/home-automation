@@ -37,8 +37,8 @@
         test_command: mount
       when: reboot.changed
 
-    - name: Update packages on the sensors
-      apt: update_cache=yes
+    - name: Update and packages on the sensors
+      apt: update_cache=yes upgrade=yes
 
     - name: Install packages
       apt: 

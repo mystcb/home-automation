@@ -48,8 +48,8 @@
       when: reboot.changed
 
     - name: Update packages on the sensors
-      apt: update_cache=yes
-
+      apt: update_cache=yes upgrade=yes
+      
     - name: Install packages
       apt: 
         name: 
@@ -93,7 +93,7 @@
           copy: src=code/doorsensor/doorsensor.service dest=/etc/systemd/system/doorsensor.service owner=root group=root mode=0644
         - name: Copy the door sensor config to home
           template: src=code/doorsensor/doorsensor.json.j2 dest=/home/pi/doorsensor.json owner=pi group=pi mode=0644
-        - name: Start and enable the environmental sensor service
+        - name: Start and enable the door sensor service
           systemd:
             state: started
             enabled: yes
