@@ -65,8 +65,12 @@ ser = serial.Serial('/dev/ttyAMA0', 38400, timeout=5)
 # Main monitoring loop
 try:
     while True:
-        # Read in the whole line from the seial connector
-        sensorData = ser.readline().decode("utf-8")
+        try:
+            # Read in the whole line from the seial connector
+            sensorData = ser.readline().decode("utf-8")
+        except:
+            time.sleep(5)
+            continue
         # Split the serial readline using a space as a delimiter
         z = sensorData.split(" ")
         # Set the comma usage to False
