@@ -16,3 +16,8 @@ home-servers
 
 # Editor files
 .vscode
+
+# Python Non-important files
+__pycache__/
+*.py[cod]
+*$py.class
