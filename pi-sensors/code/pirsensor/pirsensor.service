@@ -1,0 +1,11 @@
+[Unit]
+Description=PIR sensor loop
+After=network.target
+
+[Service]
+Type=idle
+ExecStart=/usr/local/bin/pirsensor -C /home/pi/pirsensor.json
+User=pi
+
+[Install]
+WantedBy=multi-user.target
