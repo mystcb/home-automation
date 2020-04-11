@@ -4,6 +4,9 @@ pi-sensors/secrets.yaml
 # Stop the upload of the inventory
 pi-sensors/inventory/all-nodes
 
+# Do not include my testing script
+pi-sensors/testing.yaml
+
 # Stop any random retry files
 pi-sensors/*.retry
 
