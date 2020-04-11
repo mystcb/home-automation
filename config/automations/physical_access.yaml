@@ -1,0 +1,13 @@
+- id: front_door_opened
+  alias: "Physical Access: Front Door Opened"
+  trigger:
+  - entity_id: binary_sensor.front_door
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition: []
+  action:
+  - service: notify.slack
+    data:
+      title: Front Door Status Open
+      message: Front door has been opened

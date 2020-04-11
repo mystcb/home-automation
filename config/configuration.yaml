@@ -1,0 +1,41 @@
+# Core Configuration
+homeassistant: !include includes/homeassistant.yaml
+default_config:
+frontend:
+  themes: !include_dir_merge_named themes
+discovery:
+api:
+http: !include includes/http.yaml
+#logger: !include includes/logger.yaml
+
+# Database Configuration
+recorder: !include includes/recorder.yaml
+influxdb: !include includes/influxdb.yaml
+
+# UI Elements
+script: !include scripts.yaml
+automation: !include automations.yaml
+automation old: !include_dir_merge_list automations
+
+group: !include includes/groups.yaml
+weather: !include includes/weather.yaml
+intent_script: !include includes/intent_script.yaml
+device_tracker: !include includes/device_tracker.yaml
+light: !include includes/lights.yaml
+zone: !include includes/zones.yaml
+sensor: !include includes/sensor.yaml
+binary_sensor: !include includes/binary_sensor.yaml
+input_boolean: !include includes/input_boolean.yaml
+homekit: !include includes/homekit.yaml
+alexa: !include includes/alexa.yaml
+alarm_control_panel: !include includes/alarm_control_panel.yaml
+hive: !include includes/hive.yaml
+climate: !include includes/climate.yaml
+media_player: !include includes/media_player.yaml
+ifttt: !include includes/ifttt.yaml
+ios: !include includes/ios.yaml
+tplink: !include includes/tplink.yaml
+spotify: !include includes/spotify.yaml
+mailgun: !include includes/mailgun.yaml
+notify: !include includes/notify.yaml
+lametric: !include includes/lametric.yaml

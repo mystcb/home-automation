@@ -1,0 +1,8 @@
+GetAlarmStatus:
+    speech:
+        text: The alarm is currently {{ states.alarm_control_panel.primary_alarm_panel.state }}
+goodNight:
+    speech:
+        text: Lights out. Goodnight! 
+    action:
+        service: script.1557179300472

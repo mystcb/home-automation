@@ -1,0 +1,180 @@
+# Weather prediction
+  - platform: yr
+  - platform: darksky
+    api_key: !secret darksky_apikey
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature
+      - apparent_temperature
+      - temperature_min
+      - temperature_max
+      - wind_bearing
+      - humidity
+      - precip_probability
+      - precip_intensity
+      - precip_type
+      - wind_speed
+      - pressure
+    forecast:
+      - 0
+      - 1
+    scan_interval:
+      minutes: 10
+  - platform: metoffice
+    api_key: !secret met_office_api_key
+    monitored_conditions:
+      - weather
+      - temperature
+      - feels_like_temperature
+      - wind_speed
+      - wind_direction
+      - wind_gust
+      - visibility
+      - visibility_distance
+      - uv
+      - precipitation
+      - humidity
+      
+# Resource stats of the RPi
+  - platform: cpuspeed
+    name: CPU
+  - platform: systemmonitor
+    resources:
+      - type: memory_free
+      - type: memory_use_percent
+      - type: processor_use
+      - type: last_boot
+      - type: disk_use
+        arg: /
+      - type: disk_use_percent
+        arg: /
+        
+# MQTT Sensors
+  - platform: mqtt
+    name: "Orange Room Temperature"
+    state_topic: "orangeroom/sensor1"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
+  - platform: mqtt
+    name: "Orange Room Pressure"
+    state_topic: "orangeroom/sensor1"
+    unit_of_measurement: 'hPa'
+    value_template: "{{ value_json.pressure }}"
+  - platform: mqtt
+    name: "Orange Room Humidity"
+    state_topic: "orangeroom/sensor1"
+    unit_of_measurement: '%'
+    value_template: "{{ value_json.humidity }}"
+  - platform: mqtt
+    name: "Hallway Temperature"
+    state_topic: "hallway/sensor1"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
+  - platform: mqtt
+    name: "Hallway Pressure"
+    state_topic: "hallway/sensor1"
+    unit_of_measurement: 'hPa'
+    value_template: "{{ value_json.pressure }}"
+  - platform: mqtt
+    name: "Hallway Humidity"
+    state_topic: "hallway/sensor1"
+    unit_of_measurement: '%'
+    value_template: "{{ value_json.humidity }}"
+  - platform: mqtt
+    name: "Bedroom Temperature"
+    state_topic: "bedroom/sensor1"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
+  - platform: mqtt
+    name: "Bedroom Pressure"
+    state_topic: "bedroom/sensor1"
+    unit_of_measurement: 'hPa'
+    value_template: "{{ value_json.pressure }}"
+  - platform: mqtt
+    name: "Bedroom Humidity"
+    state_topic: "bedroom/sensor1"
+    unit_of_measurement: '%'
+    value_template: "{{ value_json.humidity }}"
+  - platform: mqtt
+    name: "Flights Tracked"
+    state_topic: "fr24/tracked_aircraft"
+    icon: mdi:airplane
+    unit_of_measurement: 'aircraft'
+  - platform: plex
+    name: "Morris Drive Plex"
+    host: plex.home.faereal.net
+    token: !secret plex_token
+  - platform: mqtt
+    name: 'Power Usage'
+    state_topic: "understairs/powersensor"
+    icon: mdi:flash
+    unit_of_measurement: 'Watts'
+    value_template: "{{ value_json.sensor3 }}"
+    
+    
+# TP-Link Plug Sensors
+  - platform: template
+    sensors:
+      washing_machine_amps:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Current"
+        value_template: '{{ states.switch.washing_machine.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      washing_machine_watts:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Current Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      washing_machine_kwh:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Total Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      washing_machine_volts:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Voltage"
+        value_template: '{{ states.switch.washing_machine.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      washing_machine_today_kwh:
+        friendly_name_template: "{{ states.switch.washing_machine.name}} Today's Consumption"
+        value_template: '{{ states.switch.washing_machine.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+
+      tumble_dryer_amps:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Current"
+        value_template: '{{ states.switch.tumble_dryer.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      tumble_dryer_watts:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Current Consumption"
+        value_template: '{{ states.switch.tumble_dryer.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      tumble_dryer_kwh:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Total Consumption"
+        value_template: '{{ states.switch.tumble_dryer.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      tumble_dryer_volts:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Voltage"
+        value_template: '{{ states.switch.tumble_dryer.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      tumble_dryer_today_kwh:
+        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Today's Consumption"
+        value_template: '{{ states.switch.tumble_dryer.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+        
+      dishwasher_amps:
+        friendly_name_template: "{{ states.switch.dishwasher.name}} Current"
+        value_template: '{{ states.switch.dishwasher.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      dishwasher_watts:
+        friendly_name_template: "{{ states.switch.dishwasher.name}} Current Consumption"
+        value_template: '{{ states.switch.dishwasher.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      dishwasher_kwh:
+        friendly_name_template: "{{ states.switch.dishwasher.name}} Total Consumption"
+        value_template: '{{ states.switch.dishwasher.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      dishwasher_volts:
+        friendly_name_template: "{{ states.switch.dishwasher.name}} Voltage"
+        value_template: '{{ states.switch.dishwasher.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      dishwasher_today_kwh:
+        friendly_name_template: "{{ states.switch.dishwasher.name}} Today's Consumption"
+        value_template: '{{ states.switch.dishwasher.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'        

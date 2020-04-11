@@ -1,0 +1,25 @@
+# Ensure that none of the secrets are uploaded to git
+secrets.yaml
+known_devices.yaml
+
+# Stop any SSL Certs from being uploaded.
+ssl/*
+
+# Any specific storage folders an state files
+.cloud/*
+.storage/*
+.homekit.state
+.ios.conf
+
+# Additional specific files
+*.tile.conf
+home-assistant.log
+plex.conf
+tts/
+
+# AppDeamon Files
+appdaemon/compiled
+appdaemon/dashboards/
+
+# Downloaded Custom Items
+themes/ios-*

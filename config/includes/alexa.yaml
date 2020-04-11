@@ -1,0 +1,18 @@
+smart_home:
+  filter:
+    exclude_domains:
+      - light
+      - automation
+      - group
+      - sensor
+      - media_player
+    include_entities:
+      - sensor.dark_sky_temperature
+      - sensor.hallway_temperature
+      - sensor.orange_room_temperature
+      - light.bedroom_lamp
+      - light.living_room_lamp
+      - light.living_room_lamp_2
+      - light.loft
+      - light.uplight
+      - light.reading_light_2

@@ -1,0 +1,86 @@
+# Door Switches
+  - platform: mqtt
+    name: "Front Door"
+    state_topic: "hallway/frontdoor/state"
+    device_class: "door"
+    
+# PIR Movement Sensor
+  - platform: mqtt
+    name: "Test Movement Sensor"
+    state_topic: "testing/test/state"
+    device_class: motion
+    availability_topic: "testing/test/status"
+
+# Sensor Online Check
+  - platform: ping
+    name: "Orange Room Sensor Check"
+    host: !secret orange_sensor_host
+    count: 2
+    scan_interval: 30
+  - platform: ping
+    name: "Hallway Sensor Check"
+    host: !secret hallway_sensor_host
+    count: 2
+    scan_interval: 30
+  - platform: ping
+    name: "Power Sensor Check"
+    host: !secret power_sensor_host
+    count: 2
+    scan_interval: 30
+  - platform: ping
+    name: "Bedroom Sensor Check"
+    host: !secret bedroom_sensor_host
+    count: 2
+    scan_interval: 30
+  - platform: ping
+    name: "Sakura Status Check"
+    host: !secret sakura_sensor_host
+    count: 2
+    scan_interval: 30
+    
+  - platform: template
+    sensors:
+      # Who is home?
+      no_one_home:
+        friendly_name: Anyone Home
+        value_template: >
+          {{ not is_state("person.colin_barker", "home") }}
+          
+      # Washing Machine Status
+      washing_machine:
+        friendly_name: Washing Machine
+        value_template: >
+          {{ states("sensor.washing_machine_watts") | float(0) > 3 }}
+        delay_off: "00:04:00"
+        icon_template: >
+          {% if is_state("binary_sensor.washing_machine", "on") %}
+            mdi:washing-machine
+          {% else %}
+            mdi:washing-machine-off
+          {% endif %}
+
+      # Tumble Dryer Status
+      tumble_dryer:
+        friendly_name: Tumble Dryer
+        value_template: >
+          {{ states("sensor.tumble_dryer_watts") | float(0) > 3 }}
+        delay_off: "00:04:00"
+        icon_template: >
+          {% if is_state("binary_sensor.tumble_dryer", "on") %}
+            mdi:tumble-dryer
+          {% else %}
+            mdi:tumble-dryer-off
+          {% endif %}
+
+      # Tumble Dryer Status
+      dishwasher:
+        friendly_name: Dishwasher
+        value_template: >
+          {{ states("sensor.dishwasher_watts") | float(0) > 5 }}
+        delay_off: "00:04:00"
+        icon_template: >
+          {% if is_state("binary_sensor.dishwasher", "on") %}
+            mdi:dishwasher
+          {% else %}
+            mdi:dishwasher-off
+          {% endif %}

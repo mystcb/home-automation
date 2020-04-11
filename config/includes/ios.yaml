@@ -1,0 +1,38 @@
+push:
+  categories:
+    - name: Hibernate house
+      identifier: 'hibernate_house'
+      actions:
+        - identifier: 'HIBERNATE_HOUSE'
+          title: 'Hibernate house'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: true
+          behavior: 'default'
+        - identifier: 'ALARM_ON'
+          title: "Arm Alarm"
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'
+        - identifier: 'HEATING_OFF'
+          title: "Turn heating off"
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'
+    - name: Return home
+      identifier: 'return_home'
+      actions:
+        - identifier: 'RETURN_HOME'
+          title: 'Return home'
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: true
+          behavior: 'default'
+        - identifier: 'HEATING_ON_AUTO'
+          title: "Turn heating on"
+          activationMode: 'background'
+          authenticationRequired: false
+          destructive: false
+          behavior: 'default'

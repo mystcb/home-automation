@@ -1,0 +1,23 @@
+#######
+# Input Booleans
+#######
+
+test_boolean:
+  name: Test Switch
+  initial: off
+  icon: mdi:test-tube
+      
+home_automation:
+  name: Light Automation
+  initial: on
+  icon: mdi:lightbulb
+      
+guest_mode:
+  name: Guest Mode
+  initial: off
+  icon: mdi:account-group
+  
+living_room_auto:
+  name: Living Room Automatic Lights
+  initial: on
+  icon: mdi:lightbulb

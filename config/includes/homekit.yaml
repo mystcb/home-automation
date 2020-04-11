@@ -1,0 +1,20 @@
+filter:
+  include_domains:
+    - alarm_control_panel
+    - script
+  include_entities:
+    - sensor.dark_sky_temperature
+    - sensor.orange_room_temperature
+    - sensor.orange_room_humidity
+    - sensor.hallway_temperature
+    - sensor.hallway_humidity
+    - binary_sensor.front_door
+    - binary_sensor.landing_motion_sensor
+    - binary_sensor.hallway_motion_sensor
+    - switch.desk_lamp
+    - light.bedroom_lamp
+    - light.living_room_lamp
+    - light.living_room_lamp_2
+    - light.loft
+    - light.uplight
+    - light.reading_light_2

@@ -1,0 +1,209 @@
+## Script of Scripts
+hibernate_house:
+  alias: Hibernate House
+  sequence:
+  - service: script.arm_alarm
+    data: {}
+  - service: script.heating_off
+    data: {}
+    
+return_home:
+  alias: Return Home
+  sequence:
+  - service: script.disarm_alarm
+    data: {}
+  - service: script.heating_on_auto
+    data: {}
+  - service: script.return_home_lights
+    data: {}
+      
+      
+## Home Alarm System
+arm_alarm:
+  alias: Arm Alarm
+  sequence:
+  - service: alarm_control_panel.alarm_arm_away
+    data:
+      entity_id: alarm_control_panel.primary_alarm_panel
+      
+disarm_alarm:
+  alias: Disarm Alarm
+  sequence:
+  - service: alarm_control_panel.alarm_disarm
+    data:
+      entity_id: alarm_control_panel.primary_alarm_panel
+
+intruder_alert:
+  alias: "Alarm: Intruder Alert"
+  sequence:
+  - service: notify.ios_colin
+    data:
+      message: Warning, the house alarm has been triggered
+      title: 'ALERT: ALARM TRIGGERED'
+      data:
+        push:
+          sound:
+            name: "3rd_party_critical.caf"
+            critical: 1
+            volume: 1.0
+  - service: notify.slack
+    data:
+      title: Alarm has been tiggered
+      message: ":warning: ALERT: HOUSE ALARM HAS BEEN TRIGGERED :warning:"
+  - service: light.turn_on
+    data:
+      entity_id: light.orange_room_main
+      rgb_color:
+      - 255
+      - 43
+      - 0
+  - service: light.turn_on
+    data:
+      entity_id: light.bedroom_main
+      rgb_color:
+      - 255
+      - 43
+      - 0
+  - service: light.turn_on
+    data:
+      entity_id: light.living_room_light_left
+      rgb_color:
+      - 255
+      - 43
+      - 0
+  - service: light.turn_on
+    data:
+      entity_id: light.living_room_light_right
+      rgb_color:
+      - 255
+      - 43
+      - 0
+        
+intruder_alert_reset:
+  alias: "Alarm: intruder Alert Reset"
+  sequence:
+  - service: notify.slack
+    data:
+      title: Reset the intruder alert
+      message: "Intruder Alarm Reset"
+  - service: light.turn_on
+    data:
+      entity_id: light.orange_room_main
+      color_temp: 272
+  - service: light.turn_on
+    data:
+      entity_id: light.bedroom_main
+      color_temp: 272
+  - service: light.turn_on
+    data:
+      entity_id: light.living_room_light_left
+      rgb_color:
+      - 255
+      - 210
+      - 129
+  - service: light.turn_on
+    data:
+      entity_id: light.living_room_light_right
+      rgb_color:
+      - 255
+      - 210
+      - 129     
+
+## Lighting Scripts
+return_home_lights:
+  alias: "Return Home: Lights"
+  sequence:
+  - condition: numeric_state
+    entity_id: 'sensor.front_house_sensor_light_level'
+    below: 75
+  - service: light.turn_on
+    data:
+      entity_id: light.front_of_house
+  - service: light.turn_on
+    data:
+      entity_id: light.hallway_light
+  - service: notify.slack
+    data:
+      title: Return Light Automation
+      message: Lights have been turned on
+
+## Heating Scripts
+heating_on_auto:
+  alias: "House Heating: Auto"
+  sequence:
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.bedroom_valve
+      hvac_mode: "auto"
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.hallway_valve
+      hvac_mode: "auto"
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.landing_valve
+      hvac_mode: "auto"
+  ## Disabled as these are not setup yet
+  #- service: climate.set_hvac_mode
+  #  data:
+  #    entity_id: climate.bathroom_valve
+  #    hvac_mode: "auto"
+  #- service: climate.set_hvac_mode
+  #  data:
+  #    entity_id: climate.orange_room_valve
+  #    hvac_mode: "auto"
+  #- service: climate.set_hvac_mode
+  #  data:
+  #    entity_id: climate.kitchen_valve
+  #    hvac_mode: "auto"
+      
+heating_off:
+  alias: "House Heating: Off"
+  sequence:
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.bedroom_valve
+      hvac_mode: "off"
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.hallway_valve
+      hvac_mode: "off"
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.landing_valve
+      hvac_mode: "off"
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.bathroom_valve
+      hvac_mode: "off"
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.orange_room_valve
+      hvac_mode: "off"
+  - service: climate.set_hvac_mode
+    data:
+      entity_id: climate.kitchen_valve
+      hvac_mode: "off"
+      
+## Goodnight
+goodnight:
+  alias: Goodnight
+  sequence:
+  - service: notify.slack
+    data:
+      title: "Goodnight Message"
+      message: "Goodnight Colin! :zzz:"
+  - service: alarm_control_panel.alarm_arm_home
+    data:
+      entity_id: alarm_control_panel.primary_alarm_panel
+  - service: light.turn_off
+    data:
+      entity_id: all
+  - service: switch.turn_off
+    data:
+      entity_id: switch.desk_lamp
+    
+    
+    
+    
+    

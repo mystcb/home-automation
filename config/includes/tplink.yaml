@@ -1,0 +1,5 @@
+discovery: false
+switch:
+  - host: !secret tp_link_washing_machine_plug
+  - host: !secret tp_link_tumble_dryer_plug
+  - host: !secret tp_link_dishwasher_plug

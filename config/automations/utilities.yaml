@@ -1,0 +1,64 @@
+- id: washing_machine_finished_notification
+  alias: 'Utilities: Washing Machine has Finished'
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.washing_machine
+    from: 'off'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.washing_machine
+    state: 'on'
+  action:
+  - delay: 00:01:00
+  - condition: state
+    entity_id: binary_sensor.washing_machine
+    state: 'off'
+  - service: notify.slack
+    data:
+      title: Washing Machine Finished
+      message: The washing machine has finished
+      
+      
+- id: tumble_dryer_finished_notification
+  alias: 'Utilities: Tumble Dryer has Finished'
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.tumble_dryer
+    from: 'off'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.tumble_dryer
+    state: 'on'
+  action:
+  - delay: 00:01:00
+  - condition: state
+    entity_id: binary_sensor.tumble_dryer
+    state: 'off'
+  - service: notify.slack
+    data:
+      title: Tumble Dryer Finished
+      message: The tumble dryer cycle has finished
+      
+      
+- id: dishwasher_finished_notification
+  alias: 'Utilities: Dishwasher has Finished'
+  initial_state: 'on'
+  trigger:
+  - platform: state
+    entity_id: binary_sensor.dishwasher
+    from: 'off'
+  condition:
+  - condition: state
+    entity_id: binary_sensor.dishwasher
+    state: 'on'
+  action:
+  - delay: 00:01:00
+  - condition: state
+    entity_id: binary_sensor.dishwasher
+    state: 'off'
+  - service: notify.slack
+    data:
+      title: Dishwasher Finished
+      message: The dishwasher has finished

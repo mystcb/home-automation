@@ -1,0 +1,4 @@
+person.colin_barker:
+    entity_picture: 'https://s3.eu-west-2.amazonaws.com/home-assist-assets/images/colin.jpg'
+media_player.living_room:
+    entity_picture: 'https://s3.eu-west-2.amazonaws.com/home-assist-assets/images/roku.png'

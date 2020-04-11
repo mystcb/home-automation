@@ -1,0 +1,133 @@
+## Landing Lights
+- id: sensor_lights_landing_light_auto_on
+  alias: 'Landing Light: Turn On'
+  trigger:
+  - entity_id: binary_sensor.landing_motion_sensor
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: light.landing_light
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.home_automation
+    state: 'on'
+  action:
+  - alias: ''
+    data:
+      entity_id: light.landing_light
+    service: light.turn_on
+    
+- id: sensor_lights_landing_light_auto_off
+  alias: 'Landing Light: Turn Off'
+  trigger:
+  - entity_id: binary_sensor.landing_motion_sensor
+    for:
+      minutes: 1
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: light.landing_light
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.home_automation
+    state: 'on'
+  action:
+  - data:
+      entity_id: light.landing_light
+    service: light.turn_off
+    
+## Hallway Lights
+- id: sensor_lights_hallway_light_auto_on
+  alias: 'Hallway Light: Turn On'
+  trigger:
+  - entity_id: binary_sensor.hallway_motion_sensor
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: light.hallway_light
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.home_automation
+    state: 'on'
+  action:
+  - alias: ''
+    data:
+      entity_id: light.hallway_light
+    service: light.turn_on
+    
+- id: sensor_lights_hallway_light_auto_off
+  alias: 'Hallway Light: Turn Off'
+  trigger:
+  - entity_id: binary_sensor.hallway_motion_sensor
+    for:
+      minutes: 1
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: light.hallway_light
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.home_automation
+    state: 'on'
+  action:
+  - data:
+      entity_id: light.hallway_light
+    service: light.turn_off
+    
+## Living Room Lights
+- id: sensor_lights_living_room_light_auto_on
+  alias: 'Living Room Lights: Turn On'
+  trigger:
+  - entity_id: binary_sensor.living_room_motion_sensor
+    from: 'off'
+    platform: state
+    to: 'on'
+  condition:
+  - condition: state
+    entity_id: light.living_room_light_left
+    state: 'off'
+  - condition: state
+    entity_id: light.living_room_light_right
+    state: 'off'
+  - condition: state
+    entity_id: input_boolean.living_room_auto
+    state: 'on'
+  action:
+  - data:
+      entity_id: light.living_room_light_left
+    service: light.turn_on
+  - data:
+      entity_id: light.living_room_light_right
+    service: light.turn_on    
+    
+- id: sensor_lights_living_room_light_auto_off
+  alias: 'Living Room Lights: Turn Off'
+  trigger:
+  - entity_id: binary_sensor.living_room_motion_sensor
+    for:
+      minutes: 1
+    platform: state
+    to: 'off'
+  condition:
+  - condition: state
+    entity_id: light.living_room_light_left
+    state: 'on'
+  - condition: state
+    entity_id: light.living_room_light_right
+    state: 'on'
+  - condition: state
+    entity_id: input_boolean.living_room_auto
+    state: 'on'
+  action:
+  - data:
+      entity_id: light.living_room_light_left
+    service: light.turn_off
+  - data:
+      entity_id: light.living_room_light_right
+    service: light.turn_off
