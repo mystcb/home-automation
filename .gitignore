@@ -1,4 +1,4 @@
-# Stop uploading secrets
+# Stop uploading pi-sensor secrets
 pi-sensors/secrets.yaml
 
 # Stop the upload of the inventory
@@ -6,6 +6,10 @@ pi-sensors/inventory/all-nodes
 
 # Stop any random retry files
 pi-sensors/*.retry
+
+# Initially stop uploading additional scripts folder till complete
+aws
+home-servers
 
 # Editor files
 .vscode
