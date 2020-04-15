@@ -2,6 +2,9 @@
 
 Setup for my [Home Assistant](https://home-assistant.io) including all sensor scripts, configuration, and reference material. This readme format has been nicely borrowed from [McAminiti's Git Repo](https://github.com/mcaminiti/homeassistant), with additional help from [basnijholt's setup](https://github.com/basnijholt/home-assistant-config).
 
+# Overview Page
+![Overview](https://assets.tokonatsu.org.uk/personal/home-assistant/overview.png)
+
 # Devices
 
 ## Hubs
