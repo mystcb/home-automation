@@ -1,0 +1,342 @@
+[
+    {
+        "id": "d3b4db0b.6bebb8",
+        "type": "tab",
+        "label": "Utilities",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "67132d01.c9f934",
+        "type": "server-state-changed",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Dishwasher is Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.dishwasher",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 180,
+        "y": 40,
+        "wires": [
+            [
+                "8c85ac30.0d16b"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "8c85ac30.0d16b",
+        "type": "delay",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Delay fire till both cycles complete",
+        "pauseType": "delay",
+        "timeout": "100",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 520,
+        "y": 40,
+        "wires": [
+            [
+                "83d1caab.c6d6d8"
+            ]
+        ]
+    },
+    {
+        "id": "83d1caab.c6d6d8",
+        "type": "api-call-service",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Notify Slack",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "slack",
+        "entityId": "",
+        "data": "{\"title\":\"Dishwasher Complete\",\"message\":\"The dishwasher has finished\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 790,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1d24e22e.64033e",
+        "type": "server-state-changed",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Washing Machine is Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.washing_machine",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 160,
+        "y": 120,
+        "wires": [
+            [
+                "b88af363.16905"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b88af363.16905",
+        "type": "delay",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Delay fire for 1 minute",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 480,
+        "y": 120,
+        "wires": [
+            [
+                "5817e9fc.1b3ca8"
+            ]
+        ]
+    },
+    {
+        "id": "5817e9fc.1b3ca8",
+        "type": "api-call-service",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Notify Slack",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "slack",
+        "entityId": "",
+        "data": "{\"title\":\"Washing Machine Complete\",\"message\":\"The washing machine has finished\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 790,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b4fbbcaa.8f629",
+        "type": "server-state-changed",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Tumble Dryer is Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.tumble_dryer",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 2,
+        "output_only_on_state_change": true,
+        "x": 170,
+        "y": 200,
+        "wires": [
+            [
+                "b960ef7c.30cdd"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b960ef7c.30cdd",
+        "type": "delay",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Delay fire for 1 minute",
+        "pauseType": "delay",
+        "timeout": "1",
+        "timeoutUnits": "minutes",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "e513c08.868124"
+            ]
+        ]
+    },
+    {
+        "id": "e513c08.868124",
+        "type": "api-call-service",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Notify Slack",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "slack",
+        "entityId": "",
+        "data": "{\"title\":\"Tumble Dryer Complete\",\"message\":\"The tumble dryer has finished\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 790,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f63af316.be593",
+        "type": "api-call-service",
+        "z": "d3b4db0b.6bebb8",
+        "name": "House Heating Auto",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_hvac_mode",
+        "entityId": "",
+        "data": "{\"hvac_mode\":\"auto\",\"entity_id\":[\"climate.bedroom_valve\",\"climate.hallway_valve\",\"climate.landing_valve\"]}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 480,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "45fb6e53.097a9",
+        "type": "api-call-service",
+        "z": "d3b4db0b.6bebb8",
+        "name": "House Heating Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "climate",
+        "service": "set_hvac_mode",
+        "entityId": "",
+        "data": "{\"hvac_mode\":\"off\",\"entity_id\":[\"climate.bedroom_valve\",\"climate.hallway_valve\",\"climate.landing_valve\",\"climate.bathroom_valve\",\"climate.kitchen_valve\",\"climate.orange_room_valve\"]}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 470,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4f6d0ba6.d7ec74",
+        "type": "link in",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Heating Auto On",
+        "links": [
+            "b8913a0.6f80bc8",
+            "4a827434.4802dc"
+        ],
+        "x": 255,
+        "y": 400,
+        "wires": [
+            [
+                "f63af316.be593"
+            ]
+        ]
+    },
+    {
+        "id": "fb82fc62.f02a",
+        "type": "link in",
+        "z": "d3b4db0b.6bebb8",
+        "name": "Heating Off",
+        "links": [
+            "9ccfc002.ebbe",
+            "68b7ba02.1bda14"
+        ],
+        "x": 255,
+        "y": 460,
+        "wires": [
+            [
+                "45fb6e53.097a9"
+            ]
+        ]
+    },
+    {
+        "id": "f36c1731.be17b8",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "addon": true
+    }
+]

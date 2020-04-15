@@ -1,0 +1,156 @@
+[
+    {
+        "id": "ce430c44.4fd13",
+        "type": "tab",
+        "label": "Alexa",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "dd35947.c17c568",
+        "type": "server-events",
+        "z": "ce430c44.4fd13",
+        "name": "IFTTT Webhook",
+        "server": "f36c1731.be17b8",
+        "event_type": "ifttt_webhook_received",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "x": 220,
+        "y": 200,
+        "wires": [
+            [
+                "aaaef4e3.dacda8"
+            ]
+        ]
+    },
+    {
+        "id": "aaaef4e3.dacda8",
+        "type": "switch",
+        "z": "ce430c44.4fd13",
+        "name": "Check Action",
+        "property": "payload.event.action",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "goodnight",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "intruder",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 480,
+        "y": 200,
+        "wires": [
+            [
+                "60d221cc.3e5ec",
+                "582edfe.38d642",
+                "6626b366.5398fc"
+            ],
+            [
+                "d2a71531.0381e8"
+            ]
+        ]
+    },
+    {
+        "id": "d2a71531.0381e8",
+        "type": "link out",
+        "z": "ce430c44.4fd13",
+        "name": "Link to Intruder Alert",
+        "links": [
+            "13288b57.e09645"
+        ],
+        "x": 795,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "60d221cc.3e5ec",
+        "type": "link out",
+        "z": "ce430c44.4fd13",
+        "name": "Link to Lights Out",
+        "links": [
+            "2d70edf5.6c35a2"
+        ],
+        "x": 795,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "582edfe.38d642",
+        "type": "link out",
+        "z": "ce430c44.4fd13",
+        "name": "Link to Arm Alarm (HOME)",
+        "links": [
+            "87df57ed.2752b8"
+        ],
+        "x": 795,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "6626b366.5398fc",
+        "type": "api-call-service",
+        "z": "ce430c44.4fd13",
+        "name": "Notify Slack",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "slack",
+        "entityId": "",
+        "data": "{\"title\":\"Goodnight Message\",\"message\":\"Goodnight Colin! :zzz:\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 840,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "263943c3.92772c",
+        "type": "comment",
+        "z": "ce430c44.4fd13",
+        "name": "Goodnight",
+        "info": "",
+        "x": 840,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "d298108.95572f",
+        "type": "comment",
+        "z": "ce430c44.4fd13",
+        "name": "Intruder Alert",
+        "info": "",
+        "x": 850,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "f36c1731.be17b8",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "addon": true
+    }
+]

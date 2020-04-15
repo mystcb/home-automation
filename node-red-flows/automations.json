@@ -1,0 +1,274 @@
+[
+    {
+        "id": "8de3c442.fd07e8",
+        "type": "tab",
+        "label": "Automations",
+        "disabled": false,
+        "info": "# Summary\nEvery timed automation outside of the usual items. Very much including push notifications, set up on a timed schedule."
+    },
+    {
+        "id": "e591d311.f93e",
+        "type": "inject",
+        "z": "8de3c442.fd07e8",
+        "name": "Run every 15 minutes",
+        "topic": "",
+        "payload": "trigger",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "*/15 0-23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 180,
+        "y": 100,
+        "wires": [
+            [
+                "88ae4d5b.6f58b"
+            ]
+        ]
+    },
+    {
+        "id": "88ae4d5b.6f58b",
+        "type": "api-current-state",
+        "z": "8de3c442.fd07e8",
+        "name": "Sun State",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "sun.sun",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 400,
+        "y": 100,
+        "wires": [
+            [
+                "cce623ba.dc26"
+            ]
+        ]
+    },
+    {
+        "id": "cce623ba.dc26",
+        "type": "function",
+        "z": "8de3c442.fd07e8",
+        "name": "Set Data Template",
+        "func": "msg.payload = {\n    'sun': '' + msg.payload + ''\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 610,
+        "y": 100,
+        "wires": [
+            [
+                "a5d42b75.1aee88"
+            ]
+        ]
+    },
+    {
+        "id": "a5d42b75.1aee88",
+        "type": "mqtt out",
+        "z": "8de3c442.fd07e8",
+        "name": "Push to MQTT",
+        "topic": "alarmpanel/command",
+        "qos": "2",
+        "retain": "true",
+        "broker": "b6cd8822.fe15e8",
+        "x": 840,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "dc299fd9.11c4b",
+        "type": "api-current-state",
+        "z": "8de3c442.fd07e8",
+        "name": "Dark Sky",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": true,
+        "entity_id": "weather.dark_sky",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "68df26dd.90c788"
+            ]
+        ]
+    },
+    {
+        "id": "1be036bc.c13739",
+        "type": "inject",
+        "z": "8de3c442.fd07e8",
+        "name": "Run every 5 minutes",
+        "topic": "",
+        "payload": "Trigger",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "*/5 0-23 * * *",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 260,
+        "wires": [
+            [
+                "dc299fd9.11c4b",
+                "3cd79fe7.00007",
+                "7b28e67f.dda088"
+            ]
+        ]
+    },
+    {
+        "id": "68df26dd.90c788",
+        "type": "join",
+        "z": "8de3c442.fd07e8",
+        "name": "",
+        "mode": "custom",
+        "build": "object",
+        "property": "",
+        "propertyType": "full",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 630,
+        "y": 260,
+        "wires": [
+            [
+                "4684028b.97c42c"
+            ]
+        ]
+    },
+    {
+        "id": "4684028b.97c42c",
+        "type": "function",
+        "z": "8de3c442.fd07e8",
+        "name": "Data Template",
+        "func": "msg.payload = {\n    'weather': {\n        'temperature': msg.payload[\"sensor.front_house_sensor_temperature\"].payload,\n        'humidity': msg.payload['weather.met_office_billingshurst'].data.attributes.humidity,\n        'ozone': msg.payload['weather.dark_sky'].data.attributes.ozone,\n        'pressure': msg.payload['weather.dark_sky'].data.attributes.pressure,\n        'wind_bearing': msg.payload['weather.dark_sky'].data.attributes.wind_bearing,\n        'wind_speed': msg.payload['weather.met_office_billingshurst'].data.attributes.wind_speed,\n        'visibility': msg.payload['weather.dark_sky'].data.attributes.visibility,\n        'forecast': msg.payload['weather.dark_sky'].data.attributes.forecast\n    }\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 800,
+        "y": 260,
+        "wires": [
+            [
+                "85893a8e.df96f8"
+            ]
+        ]
+    },
+    {
+        "id": "3cd79fe7.00007",
+        "type": "api-current-state",
+        "z": "8de3c442.fd07e8",
+        "name": "Front House Temp",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": true,
+        "entity_id": "sensor.front_house_sensor_temperature",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 410,
+        "y": 260,
+        "wires": [
+            [
+                "68df26dd.90c788"
+            ]
+        ]
+    },
+    {
+        "id": "7b28e67f.dda088",
+        "type": "api-current-state",
+        "z": "8de3c442.fd07e8",
+        "name": "Met Office: Billingshurst",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": true,
+        "entity_id": "weather.met_office_billingshurst",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 410,
+        "y": 320,
+        "wires": [
+            [
+                "68df26dd.90c788"
+            ]
+        ]
+    },
+    {
+        "id": "85893a8e.df96f8",
+        "type": "mqtt out",
+        "z": "8de3c442.fd07e8",
+        "name": "Push to MQTT",
+        "topic": "alarmpanel/command",
+        "qos": "2",
+        "retain": "true",
+        "broker": "b6cd8822.fe15e8",
+        "x": 1000,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "f36c1731.be17b8",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "addon": true
+    },
+    {
+        "id": "b6cd8822.fe15e8",
+        "type": "mqtt-broker",
+        "z": "",
+        "name": "HA-MQTT",
+        "broker": "192.168.1.9",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
+    }
+]

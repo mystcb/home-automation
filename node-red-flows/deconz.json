@@ -1,0 +1,379 @@
+[
+    {
+        "id": "ce4b6693.9d6738",
+        "type": "tab",
+        "label": "deCONZ Workflows",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "95176ef6.b4cad",
+        "type": "server-events",
+        "z": "ce4b6693.9d6738",
+        "name": "Listen for deCONZ events",
+        "server": "f36c1731.be17b8",
+        "event_type": "deconz_event",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "x": 190,
+        "y": 560,
+        "wires": [
+            [
+                "9c6b70c3.6c601"
+            ]
+        ]
+    },
+    {
+        "id": "9c6b70c3.6c601",
+        "type": "switch",
+        "z": "ce4b6693.9d6738",
+        "name": "Which Device?",
+        "property": "payload.event.id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "reading_light_switch",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 1,
+        "x": 440,
+        "y": 560,
+        "wires": [
+            [
+                "7817f3a.8e1db0c"
+            ]
+        ]
+    },
+    {
+        "id": "7817f3a.8e1db0c",
+        "type": "switch",
+        "z": "ce4b6693.9d6738",
+        "name": "Which Event?",
+        "property": "payload.event.event",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "1002",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2002",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3002",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2001",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "2003",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3001",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "3003",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4002",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "5002",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4001",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "4003",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "5001",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "5003",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 13,
+        "x": 660,
+        "y": 560,
+        "wires": [
+            [
+                "3e7f6728.58b1b8"
+            ],
+            [
+                "f6e9306c.40d11"
+            ],
+            [
+                "9c4a31a4.703bb"
+            ],
+            [
+                "98e38470.3d5b68"
+            ],
+            [
+                "accb588d.6e3678"
+            ],
+            [
+                "d8a2b2b.2cc295"
+            ],
+            [
+                "32bae8a8.bd6088"
+            ],
+            [],
+            [],
+            [],
+            [],
+            [],
+            []
+        ],
+        "info": "# IKEA Round Switch\n* `1002` - Centre Button Press\n* `2001` - Brightness Up Held Down\n* `2002` - Brightness Up\n* `2003` - Brightness Up Released after Held\n* `3001` - Brightness Down Held Down\n* `3002` - Brightness Down\n* `3003` - Brightness Down Released after Held\n* `4001` - Button Left Held Down\n* `4002` - Button Left\n* `4003` - Button Left Released after Held\n* `5001` - Button Right Held Down\n* `5002` - Button Right\n* `5003` - Button Right Released after Held"
+    },
+    {
+        "id": "3e7f6728.58b1b8",
+        "type": "api-call-service",
+        "z": "ce4b6693.9d6738",
+        "name": "Toggle Reading Light",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "toggle",
+        "entityId": "light.reading_light_2",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 920,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9c4a31a4.703bb",
+        "type": "api-current-state",
+        "z": "ce4b6693.9d6738",
+        "name": "Reading Light State",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.reading_light_2",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1280,
+        "y": 440,
+        "wires": [
+            [
+                "a495ef97.2f6f7"
+            ]
+        ]
+    },
+    {
+        "id": "a495ef97.2f6f7",
+        "type": "function",
+        "z": "ce4b6693.9d6738",
+        "name": "Set the brightness lower",
+        "func": "var max_bright = 254\nvar min_bright = 0\nvar payload = {\n    \"payload\": {\n        \"data\": {\n            \"brightness\": min_bright\n        }\n    }\n}\n\nif (isNaN(msg.data.attributes.brightness)) {\n    node.debug('here')\n    msg.data.attributes.brightness = 0\n}\n\nbrightness = msg.data.attributes.brightness - 30\nif (brightness > max_bright ) brightness = max_bright\nif (brightness < min_bright ) brightness = min_bright\npayload.payload.data.brightness = brightness\n\nreturn payload;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1550,
+        "y": 440,
+        "wires": [
+            [
+                "e57b7346.cf0f3"
+            ]
+        ]
+    },
+    {
+        "id": "f6e9306c.40d11",
+        "type": "api-current-state",
+        "z": "ce4b6693.9d6738",
+        "name": "Reading Light State",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 1,
+        "halt_if": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.reading_light_2",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1280,
+        "y": 380,
+        "wires": [
+            [
+                "18d4a56e.e98ffb"
+            ]
+        ]
+    },
+    {
+        "id": "18d4a56e.e98ffb",
+        "type": "function",
+        "z": "ce4b6693.9d6738",
+        "name": "Set the brightness higher",
+        "func": "var max_bright = 254\nvar min_bright = 0\nvar payload = {\n    \"payload\": {\n        \"data\": {\n            \"brightness\": min_bright\n        }\n    }\n}\n\nif (isNaN(msg.data.attributes.brightness)) {\n    msg.data.attributes.brightness = 0\n}\n\nbrightness = msg.data.attributes.brightness + 30\nif (brightness > max_bright ) brightness = max_bright\nif (brightness < min_bright ) brightness = min_bright\npayload.payload.data.brightness = brightness\n\nreturn payload;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1550,
+        "y": 380,
+        "wires": [
+            [
+                "e57b7346.cf0f3"
+            ]
+        ]
+    },
+    {
+        "id": "e57b7346.cf0f3",
+        "type": "api-call-service",
+        "z": "ce4b6693.9d6738",
+        "name": "Set Reading Light Brightness",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": true,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.reading_light_2",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1860,
+        "y": 400,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "98e38470.3d5b68",
+        "type": "looptimer",
+        "z": "ce4b6693.9d6738",
+        "duration": "0.75",
+        "units": "Second",
+        "maxloops": "9",
+        "maxtimeout": "2",
+        "maxtimeoutunits": "Minute",
+        "name": "Brightnes higher loop",
+        "x": 1040,
+        "y": 500,
+        "wires": [
+            [
+                "f6e9306c.40d11"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "accb588d.6e3678",
+        "type": "function",
+        "z": "ce4b6693.9d6738",
+        "name": "Stop",
+        "func": "msg.payload = \"STOP\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 870,
+        "y": 540,
+        "wires": [
+            [
+                "98e38470.3d5b68"
+            ]
+        ]
+    },
+    {
+        "id": "d8a2b2b.2cc295",
+        "type": "looptimer",
+        "z": "ce4b6693.9d6738",
+        "duration": "0.75",
+        "units": "Second",
+        "maxloops": "9",
+        "maxtimeout": "2",
+        "maxtimeoutunits": "Minute",
+        "name": "Brightnes lower loop",
+        "x": 1040,
+        "y": 560,
+        "wires": [
+            [
+                "9c4a31a4.703bb"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "32bae8a8.bd6088",
+        "type": "function",
+        "z": "ce4b6693.9d6738",
+        "name": "Stop",
+        "func": "msg.payload = \"STOP\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 870,
+        "y": 600,
+        "wires": [
+            [
+                "d8a2b2b.2cc295"
+            ]
+        ]
+    },
+    {
+        "id": "f36c1731.be17b8",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "addon": true
+    }
+]

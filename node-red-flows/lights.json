@@ -1,0 +1,1081 @@
+[
+    {
+        "id": "d32c5504.903bd8",
+        "type": "tab",
+        "label": "Lights",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "55a38556.074ccc",
+        "type": "server-state-changed",
+        "z": "d32c5504.903bd8",
+        "name": "Landing Sensor Motion",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.landing_motion_sensor",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 120,
+        "y": 80,
+        "wires": [
+            [
+                "5c7a2087.f3c9d"
+            ]
+        ]
+    },
+    {
+        "id": "24e5c408.e692bc",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Turn Landing Light On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.landing_light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1160,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ab792007.9ac2c",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Light Automation On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.home_automation",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 680,
+        "y": 60,
+        "wires": [
+            [
+                "45b3cdd3.d09fd4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4c491f03.c7203",
+        "type": "server-state-changed",
+        "z": "d32c5504.903bd8",
+        "name": "Hallway Sensor Motion",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.hallway_motion_sensor",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "91570bad.d12f98"
+            ]
+        ]
+    },
+    {
+        "id": "b7383200.53d72",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Turn Hallway Light On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.hallway_light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1160,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dfa44049.ca7d7",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Light Automation On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.home_automation",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 680,
+        "y": 300,
+        "wires": [
+            [
+                "6a929dfa.3533a4"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "87d6fc84.787fb",
+        "type": "server-state-changed",
+        "z": "d32c5504.903bd8",
+        "name": "Living Room Sensor Motion",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "entityidfilter": "binary_sensor.living_room_motion_sensor",
+        "entityidfiltertype": "exact",
+        "outputinitially": false,
+        "state_type": "str",
+        "haltifstate": "",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "outputs": 1,
+        "output_only_on_state_change": true,
+        "x": 140,
+        "y": 540,
+        "wires": [
+            [
+                "471667dc.b37658"
+            ]
+        ]
+    },
+    {
+        "id": "ccd61893.1a6478",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Light Automation On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.home_automation",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 700,
+        "y": 440,
+        "wires": [
+            [
+                "1a784709.03e429"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1a784709.03e429",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Guest Mode Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.guest_mode",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 700,
+        "y": 500,
+        "wires": [
+            [
+                "20088b2f.0e5b54"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "20088b2f.0e5b54",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Auto Lights On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.living_room_auto",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 700,
+        "y": 560,
+        "wires": [
+            [
+                "e8a6ee8f.c4088",
+                "cbc8d80f.64d888"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "916098c8.7c3808",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Turn Living Room Main Lights On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.living_room_light_right, light.living_room_light_left",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1320,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f6447e61.0e546",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Light Automation On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.home_automation",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 680,
+        "y": 120,
+        "wires": [
+            [
+                "7fccfe60.a9b12"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "2c14ae08.acf502",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Turn Landing Light Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.landing_light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1160,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f0024323.8002f",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Light Automation On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.home_automation",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 680,
+        "y": 360,
+        "wires": [
+            [
+                "1919b0dc.47b25f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5304fb61.97d9a4",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Turn Hallway Light Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.hallway_light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1160,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "1b092c73.102494",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Light Automation On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.home_automation",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 700,
+        "y": 640,
+        "wires": [
+            [
+                "eb978b15.dd3da8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "eb978b15.dd3da8",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Guest Mode Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.guest_mode",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 700,
+        "y": 700,
+        "wires": [
+            [
+                "b9755694.1d9da8"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b9755694.1d9da8",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Auto Lights On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "on",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "input_boolean.living_room_auto",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 700,
+        "y": 760,
+        "wires": [
+            [
+                "8e465caa.7d2b6",
+                "ce65be0.570534"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e3aadd4d.e3995",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Turn Living Room Main Lights Off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "light.living_room_light_right, light.living_room_light_left",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1340,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "7fccfe60.a9b12",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Landing Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.landing_light",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 920,
+        "y": 120,
+        "wires": [
+            [],
+            [
+                "2c14ae08.acf502"
+            ]
+        ]
+    },
+    {
+        "id": "6a929dfa.3533a4",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Hallway Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.hallway_light",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 920,
+        "y": 300,
+        "wires": [
+            [
+                "b7383200.53d72"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "e8a6ee8f.c4088",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Living Room Left Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.living_room_light_left",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1010,
+        "y": 460,
+        "wires": [
+            [
+                "916098c8.7c3808"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cbc8d80f.64d888",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Living Room Right Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.living_room_light_right",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1010,
+        "y": 520,
+        "wires": [
+            [
+                "916098c8.7c3808"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "45b3cdd3.d09fd4",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Landing Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.landing_light",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 920,
+        "y": 60,
+        "wires": [
+            [
+                "24e5c408.e692bc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "1919b0dc.47b25f",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Hallway Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.hallway_light",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 920,
+        "y": 360,
+        "wires": [
+            [],
+            [
+                "5304fb61.97d9a4"
+            ]
+        ]
+    },
+    {
+        "id": "8e465caa.7d2b6",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Living Room Left Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.living_room_light_left",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1010,
+        "y": 680,
+        "wires": [
+            [],
+            [
+                "e3aadd4d.e3995"
+            ]
+        ]
+    },
+    {
+        "id": "ce65be0.570534",
+        "type": "api-current-state",
+        "z": "d32c5504.903bd8",
+        "name": "Living Room Right Light Status",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "outputs": 2,
+        "halt_if": "off",
+        "halt_if_type": "str",
+        "halt_if_compare": "is",
+        "override_topic": false,
+        "entity_id": "light.living_room_light_right",
+        "state_type": "str",
+        "state_location": "payload",
+        "override_payload": "msg",
+        "entity_location": "data",
+        "override_data": "msg",
+        "blockInputOverrides": false,
+        "x": 1010,
+        "y": 760,
+        "wires": [
+            [],
+            [
+                "e3aadd4d.e3995"
+            ]
+        ]
+    },
+    {
+        "id": "eefd6a1e.265b08",
+        "type": "trigger",
+        "z": "d32c5504.903bd8",
+        "op1": "",
+        "op2": "off",
+        "op1type": "nul",
+        "op2type": "str",
+        "duration": "2",
+        "extend": false,
+        "units": "min",
+        "reset": "on",
+        "bytopic": "all",
+        "name": "",
+        "x": 470,
+        "y": 120,
+        "wires": [
+            [
+                "f6447e61.0e546"
+            ]
+        ]
+    },
+    {
+        "id": "5c7a2087.f3c9d",
+        "type": "switch",
+        "z": "d32c5504.903bd8",
+        "name": "Trigger",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 290,
+        "y": 80,
+        "wires": [
+            [
+                "eefd6a1e.265b08",
+                "ab792007.9ac2c"
+            ],
+            [
+                "eefd6a1e.265b08"
+            ]
+        ]
+    },
+    {
+        "id": "91570bad.d12f98",
+        "type": "switch",
+        "z": "d32c5504.903bd8",
+        "name": "Trigger",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 290,
+        "y": 320,
+        "wires": [
+            [
+                "c2a957d5.310ec8",
+                "dfa44049.ca7d7"
+            ],
+            [
+                "c2a957d5.310ec8"
+            ]
+        ]
+    },
+    {
+        "id": "c2a957d5.310ec8",
+        "type": "trigger",
+        "z": "d32c5504.903bd8",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "2",
+        "extend": false,
+        "units": "min",
+        "reset": "on",
+        "bytopic": "all",
+        "name": "",
+        "x": 450,
+        "y": 360,
+        "wires": [
+            [
+                "f0024323.8002f"
+            ]
+        ]
+    },
+    {
+        "id": "471667dc.b37658",
+        "type": "switch",
+        "z": "d32c5504.903bd8",
+        "name": "Trigger",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "on",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "off",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 330,
+        "y": 540,
+        "wires": [
+            [
+                "ccd61893.1a6478",
+                "c65d13c3.5a6e3"
+            ],
+            [
+                "c65d13c3.5a6e3"
+            ]
+        ]
+    },
+    {
+        "id": "c65d13c3.5a6e3",
+        "type": "trigger",
+        "z": "d32c5504.903bd8",
+        "op1": "",
+        "op2": "",
+        "op1type": "nul",
+        "op2type": "pay",
+        "duration": "2",
+        "extend": false,
+        "units": "min",
+        "reset": "on",
+        "bytopic": "all",
+        "name": "",
+        "x": 490,
+        "y": 580,
+        "wires": [
+            [
+                "1b092c73.102494"
+            ]
+        ]
+    },
+    {
+        "id": "2d70edf5.6c35a2",
+        "type": "link in",
+        "z": "d32c5504.903bd8",
+        "name": "Lights Out",
+        "links": [
+            "60d221cc.3e5ec"
+        ],
+        "x": 215,
+        "y": 920,
+        "wires": [
+            [
+                "2b9e2d0e.2fdb42",
+                "2c9c6930.98ee76"
+            ]
+        ]
+    },
+    {
+        "id": "2b9e2d0e.2fdb42",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "All Lights off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_off",
+        "entityId": "all",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 410,
+        "y": 880,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2c9c6930.98ee76",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Plug lights off",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "switch",
+        "service": "turn_off",
+        "entityId": "switch.desk_lamp",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 420,
+        "y": 940,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "67613fc0.a7437",
+        "type": "comment",
+        "z": "d32c5504.903bd8",
+        "name": "Goodnight / All lights off",
+        "info": "",
+        "x": 150,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "cbd1f9b0.311b58",
+        "type": "link in",
+        "z": "d32c5504.903bd8",
+        "name": "Return Home Lighting",
+        "links": [
+            "c35f2e8a.85fe5",
+            "8544a8b0.a78a18"
+        ],
+        "x": 715,
+        "y": 920,
+        "wires": [
+            [
+                "935ef5ed.85f048"
+            ]
+        ]
+    },
+    {
+        "id": "e30a9d3e.2c8a7",
+        "type": "comment",
+        "z": "d32c5504.903bd8",
+        "name": "Return Home Lighting",
+        "info": "",
+        "x": 660,
+        "y": 880,
+        "wires": []
+    },
+    {
+        "id": "935ef5ed.85f048",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Home Lights On",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "light",
+        "service": "turn_on",
+        "entityId": "light.front_house_light, light.hallway_light",
+        "data": "",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 860,
+        "y": 920,
+        "wires": [
+            [
+                "7243b025.df949"
+            ]
+        ]
+    },
+    {
+        "id": "7243b025.df949",
+        "type": "api-call-service",
+        "z": "d32c5504.903bd8",
+        "name": "Notify Slack",
+        "server": "f36c1731.be17b8",
+        "version": 1,
+        "debugenabled": false,
+        "service_domain": "notify",
+        "service": "slack",
+        "entityId": "",
+        "data": "{\"title\":\"Return Light Automation\",\"message\":\"Return lights have been turned on\"}",
+        "dataType": "json",
+        "mergecontext": "",
+        "output_location": "",
+        "output_location_type": "none",
+        "mustacheAltTags": false,
+        "x": 1050,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f36c1731.be17b8",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "addon": true
+    }
+]

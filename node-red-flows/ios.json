@@ -1,0 +1,162 @@
+[
+    {
+        "id": "c7797b1b.e932c8",
+        "type": "tab",
+        "label": "iOS",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "fbcac9b9.546528",
+        "type": "switch",
+        "z": "c7797b1b.e932c8",
+        "name": "Action Switch",
+        "property": "payload.event.actionName",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "HIBERNATE_HOUSE",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "ALARM_ON",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "RETURN_HOME",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "HEATING_ON_AUTO",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "HEATING_OFF",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 5,
+        "x": 440,
+        "y": 140,
+        "wires": [
+            [
+                "3bfca528.42b9fa",
+                "68b7ba02.1bda14"
+            ],
+            [
+                "3bfca528.42b9fa"
+            ],
+            [
+                "4a827434.4802dc",
+                "97d0d56c.3243c8",
+                "8544a8b0.a78a18"
+            ],
+            [
+                "4a827434.4802dc"
+            ],
+            [
+                "68b7ba02.1bda14"
+            ]
+        ]
+    },
+    {
+        "id": "538963fa.32f1dc",
+        "type": "server-events",
+        "z": "c7797b1b.e932c8",
+        "name": "IOS Action Fired",
+        "server": "f36c1731.be17b8",
+        "event_type": "ios.notification_action_fired",
+        "exposeToHomeAssistant": false,
+        "haConfig": [
+            {
+                "property": "name",
+                "value": ""
+            },
+            {
+                "property": "icon",
+                "value": ""
+            }
+        ],
+        "x": 180,
+        "y": 140,
+        "wires": [
+            [
+                "fbcac9b9.546528"
+            ]
+        ]
+    },
+    {
+        "id": "3bfca528.42b9fa",
+        "type": "link out",
+        "z": "c7797b1b.e932c8",
+        "name": "Link to ARM Away",
+        "links": [
+            "87ba6553.7d7a08"
+        ],
+        "x": 655,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "68b7ba02.1bda14",
+        "type": "link out",
+        "z": "c7797b1b.e932c8",
+        "name": "Link to Heating Off",
+        "links": [
+            "fb82fc62.f02a"
+        ],
+        "x": 655,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "4a827434.4802dc",
+        "type": "link out",
+        "z": "c7797b1b.e932c8",
+        "name": "Link to Heating Auto On",
+        "links": [
+            "4f6d0ba6.d7ec74"
+        ],
+        "x": 655,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "97d0d56c.3243c8",
+        "type": "link out",
+        "z": "c7797b1b.e932c8",
+        "name": "Link to Disarm Alarm",
+        "links": [
+            "c0b95ab9.a0d848"
+        ],
+        "x": 655,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8544a8b0.a78a18",
+        "type": "link out",
+        "z": "c7797b1b.e932c8",
+        "name": "Link to Return Home Lighting",
+        "links": [
+            "cbd1f9b0.311b58"
+        ],
+        "x": 655,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "f36c1731.be17b8",
+        "type": "server",
+        "z": "",
+        "name": "Home Assistant",
+        "addon": true
+    }
+]
