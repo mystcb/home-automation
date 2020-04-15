@@ -21,3 +21,6 @@ home-servers
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Apple Files
+.DS_Store
