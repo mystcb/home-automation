@@ -23,3 +23,9 @@ appdaemon/dashboards/
 
 # Downloaded Custom Items
 themes/ios-*
+
+# Alexa Media Player ignores
+alexa_media.*
+
+# Node Red
+node-red
