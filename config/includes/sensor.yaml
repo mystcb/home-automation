@@ -50,7 +50,7 @@
       - type: disk_use_percent
         arg: /
         
-# MQTT Sensors
+# Orange Room BME680 Sensor  
   - platform: mqtt
     name: "Orange Room Temperature"
     state_topic: "orangeroom/sensor1"
@@ -66,6 +66,8 @@
     state_topic: "orangeroom/sensor1"
     unit_of_measurement: '%'
     value_template: "{{ value_json.humidity }}"
+    
+# Hallway BME680 Sensor      
   - platform: mqtt
     name: "Hallway Temperature"
     state_topic: "hallway/sensor1"
@@ -82,6 +84,8 @@
     unit_of_measurement: '%'
     value_template: "{{ value_json.humidity }}"
   - platform: mqtt
+  
+# Bedroom BME680 Sensor  
     name: "Bedroom Temperature"
     state_topic: "bedroom/sensor1"
     unit_of_measurement: '°C'
@@ -96,15 +100,38 @@
     state_topic: "bedroom/sensor1"
     unit_of_measurement: '%'
     value_template: "{{ value_json.humidity }}"
+    
+# Conservatory BME680 Sensor  
+  - platform: mqtt
+    name: "Conservatory Temperature"
+    state_topic: "conservatory/sensor1"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
+  - platform: mqtt
+    name: "Conservatory Pressure"
+    state_topic: "conservatory/sensor1"
+    unit_of_measurement: 'hPa'
+    value_template: "{{ value_json.pressure }}"
+  - platform: mqtt
+    name: "Conservatory Humidity"
+    state_topic: "conservatory/sensor1"
+    unit_of_measurement: '%'
+    value_template: "{{ value_json.humidity }}"
+    
+# Flight Radar Pi Tracker
   - platform: mqtt
     name: "Flights Tracked"
     state_topic: "fr24/tracked_aircraft"
     icon: mdi:airplane
     unit_of_measurement: 'aircraft'
+    
+# Plex Server Details    
   - platform: plex
     name: "Morris Drive Plex"
     host: plex.home.faereal.net
     token: !secret plex_token
+    
+# Power Sensor    
   - platform: mqtt
     name: 'Power Usage'
     state_topic: "understairs/powersensor"
@@ -178,3 +205,24 @@
         friendly_name_template: "{{ states.switch.dishwasher.name}} Today's Consumption"
         value_template: '{{ states.switch.dishwasher.attributes["today_energy_kwh"] | float }}'
         unit_of_measurement: 'kWh'        
+
+      computer_array_amps:
+        friendly_name_template: "{{ states.switch.computer_array.name}} Current"
+        value_template: '{{ states.switch.computer_array.attributes["current_a"] | float }}'
+        unit_of_measurement: 'A'
+      computer_array_watts:
+        friendly_name_template: "{{ states.switch.computer_array.name}} Current Consumption"
+        value_template: '{{ states.switch.computer_array.attributes["current_power_w"] | float }}'
+        unit_of_measurement: 'W'
+      computer_array_kwh:
+        friendly_name_template: "{{ states.switch.computer_array.name}} Total Consumption"
+        value_template: '{{ states.switch.computer_array.attributes["total_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'
+      computer_array_volts:
+        friendly_name_template: "{{ states.switch.computer_array.name}} Voltage"
+        value_template: '{{ states.switch.computer_array.attributes["voltage"] | float }}'
+        unit_of_measurement: 'V'
+      computer_array_today_kwh:
+        friendly_name_template: "{{ states.switch.computer_array.name}} Today's Consumption"
+        value_template: '{{ states.switch.computer_array.attributes["today_energy_kwh"] | float }}'
+        unit_of_measurement: 'kWh'   

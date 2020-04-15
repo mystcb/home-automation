@@ -1,8 +1,14 @@
-# Door Switches
+# Front Door Switche
   - platform: mqtt
     name: "Front Door"
     state_topic: "hallway/frontdoor/state"
     device_class: "door"
+    
+# Conservatory Door Switches
+  - platform: mqtt
+    name: "Conservatory Doors"
+    state_topic: "conservatory/conservatorydoor/state"
+    device_class: "door"    
     
 # PIR Movement Sensor
   - platform: mqtt
@@ -33,8 +39,18 @@
     count: 2
     scan_interval: 30
   - platform: ping
+    name: "Conservatory Sensor Check"
+    host: !secret conservatory_sensor_host
+    count: 2
+    scan_interval: 30    
+  - platform: ping
     name: "Sakura Status Check"
     host: !secret sakura_sensor_host
+    count: 2
+    scan_interval: 30
+  - platform: ping
+    name: "Asuka Status Check"
+    host: !secret asuka_sensor_host
     count: 2
     scan_interval: 30
     
@@ -63,7 +79,7 @@
       tumble_dryer:
         friendly_name: Tumble Dryer
         value_template: >
-          {{ states("sensor.tumble_dryer_watts") | float(0) > 3 }}
+          {{ states("sensor.tumble_dryer_watts") | float(0) > 50 }}
         delay_off: "00:04:00"
         icon_template: >
           {% if is_state("binary_sensor.tumble_dryer", "on") %}
