@@ -15,7 +15,7 @@ influxdb: !include includes/influxdb.yaml
 # UI Elements
 script: !include scripts.yaml
 automation: !include automations.yaml
-automation old: !include_dir_merge_list automations
+#automation old: !include_dir_merge_list automations
 
 group: !include includes/groups.yaml
 weather: !include includes/weather.yaml
