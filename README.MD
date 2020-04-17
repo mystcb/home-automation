@@ -53,7 +53,7 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 | ------------- | :---: | ------------- | ------------- | ------------- |
 | [Plex Media Server](https://plex.tv) | 1 | Ethernet | [Plex](https://www.home-assistant.io/components/media_player.plex) / [Plex Activity Monitor](https://www.home-assistant.io/components/sensor.plex/) |  Media Server |  
 
-## Sensors
+## Motion Sensors
 
 | Device  | Quantity | Connection | Home Assistant | Notes |
 | ------------- | :---: | ------------- | ------------- | ------------- |
@@ -74,8 +74,18 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 | [Ubiquiti Networks UniFi Switch - 8 Ports (US-8-60W)](https://amzn.to/2LllvMN) | 2 | Ethernet | [Ubiquiti Unifi WAP](https://www.home-assistant.io/components/device_tracker.unifi/)| Primary Switch. Presence detection devices |
 | [Ubiquiti UniFi AC Outdoor Mesh (UAP-AC-M-PRO)](https://amzn.to/2VFp7x6) | 2 | Ethernet | [Ubiquiti Unifi WAP](https://www.home-assistant.io/components/device_tracker.unifi/)| Wireless Access Point for interior coverage. Presence detection for devices. |
 
+## Hardware
+| Device  | Quantity | Connection | Home Assistant | Notes |
+| ------------- | :---: | ------------- | ------------- | ------------- |
+| [Raspberry Pi Zero W](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-w)| 4 | Wireless | N/A | Base for the DIY sensors |
+| [Raspberry Pi Zero v1.3](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero) | 3 | USB WiFi | N/A | Base for the DIY sensors |
+| [Intel NUC i7](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc5i7ryh.html) | 1 | Ethernet | Yes! | Upgrade from an older RPi2
+| [Amazon Kindke Fire 7" 2015](https://uk.webuy.com/product-detail?id=samasv98ln05b&categoryName=tablets-android&superCatName=computing&title=amazon-kindle-fire-8gb-7%22-2015-5th-generation-b) | 2 | Wireless | [MQTT Alarm Panel](https://github.com/thanksmister/android-mqtt-alarm-panel) | Alarm panels and Appdaemon Dashboard |
+
 ## Software
 
 | Device  | Quantity | Connection | Home Assistant | Notes |
 | ------------- | :---: | ------------- | ------------- | ------------- |
 | [Pi-hole](https://pi-hole.net) | 2 | Ethernet | [Pi-Hole Sensor](https://www.home-assistant.io/components/sensor.pi_hole/) | Ad blocking. Instance runs within a [Raspberry Pi Zero W](https://thepihut.com/products/raspberry-pi-zero-w) |
+| [MQTT Alarm Panel](https://github.com/thanksmister/android-mqtt-alarm-panel)| 2 | Wireless | [Manual MQTT](https://www.home-assistant.io/integrations/manual_mqtt/) | Alarm Panel Software |
+| [LineageOS](https://lineageos.org/) | 2 | N/A | N/A | Replacement Android Software for [Amazon Kindke Fire 7" 2015](https://uk.webuy.com/product-detail?id=samasv98ln05b&categoryName=tablets-android&superCatName=computing&title=amazon-kindle-fire-8gb-7%22-2015-5th-generation-b) 
