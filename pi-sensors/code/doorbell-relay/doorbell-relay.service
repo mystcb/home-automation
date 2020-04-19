@@ -1,0 +1,11 @@
+[Unit]
+Description=Doorbell sensor loop
+After=network.target
+
+[Service]
+Type=idle
+ExecStart=/usr/local/bin/doorbell-relay -C /home/pi/doorbell-relay.json
+User=pi
+
+[Install]
+WantedBy=multi-user.target
