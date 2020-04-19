@@ -80,6 +80,21 @@
           - bme680
           - smbus
 
+    - name: Install Pi HW Sensors
+      block:
+        - name: RPi Hardware Sensor - Copy sensor script
+          copy: src=code/raspihwsensor/raspihwsensor.py dest=/usr/local/bin/raspihwsensor owner=root group=root mode=0755
+        - name: RPi Hardware Sensor - Copy service script
+          copy: src=code/raspihwsensor/raspihwsensor.service dest=/etc/systemd/system/raspihwsensor.service owner=root group=root mode=0644
+        - name: RPi Hardware Sensor - Copy configuration file
+          template: src=code/raspihwsensor/raspihwsensor.json.j2 dest=/home/pi/raspihwsensor.json owner=pi group=pi mode=0644
+        - name: RPi Hardware Sensor - Start and enable service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: raspihwsensor
+
     - name: Install environmental sensor package
       block:
         - name: Copy environmental sensor scripts
