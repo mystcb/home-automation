@@ -127,6 +127,22 @@
             name: doorsensor
       when: door_sensor == "yes"
 
+    - name: Install door bell package
+      block:
+        - name: Door Bell - Copy sensor scripts
+          copy: src=code/doorbell-relay/doorbell-relay.py dest=/usr/local/bin/doorbell-relay owner=root group=root mode=0755
+        - name: Door Bell - Copy service scripts
+          copy: src=code/doorbell-relay/doorbell-relay.service dest=/etc/systemd/system/doorbell-relay.service owner=root group=root mode=0644
+        - name: Door Bell - Copy configuration file
+          template: src=code/doorbell-relay/doorbell-relay.json.j2 dest=/home/pi/doorbell-relay.json owner=pi group=pi mode=0644
+        - name: Door Bell - Start and enable service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: doorbell-relay
+      when: door_bell == "yes"
+
     - name: Install Camera Packages
       block:
         - name: RPi Camera - Install additional packages

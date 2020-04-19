@@ -75,14 +75,14 @@ try:
             print("Doorbell Pressed")
             bellPressed = True
             # Set the GPIO to 0 to cause the relay to switch ON
-            GPIO.output(int(data['gpioPin_relay'],0))
+            GPIO.output(int(data['gpioPin_relay']),0)
             # Push Payload to MQTT
             msg = client.publish(str(data['deviceLocation']) + "/" + str(data['bellName']) + "/state", "ON")
-        if GPIO.input(int(data['gpioPin_button'])) == GPIO.HIGH and bellPressed == False:
+        if GPIO.input(int(data['gpioPin_button'])) == GPIO.LOW and bellPressed == True:
             print('Reset')
             bellPressed = False
             # Set the GPIO to 1 to cause the relay to switch OFF
-            GPIO.output(int(data['gpioPin_relay'],1))
+            GPIO.output(int(data['gpioPin_relay']),1)
             # Push Payload to MQTT
             msg = client.publish(str(data['deviceLocation']) + "/" + str(data['bellName']) + "/state", "OFF")
         time.sleep(0.1)
