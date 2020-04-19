@@ -23,11 +23,34 @@
         regexp="^{{ ansible_default_ipv4.address }}.+$"
         line="{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
 
+    - name: Install packages
+      apt: 
+        name: 
+          - python3
+          - python3-pip
+          - python3-gpiozero
+        state: present
+
     - name: Get requirements from python3-pip
       pip: 
         executable: /usr/bin/pip3
         name:
           - paho-mqtt
+
+    - name: Install Pi HW Sensors
+      block:
+        - name: RPi Hardware Sensor - Copy sensor script
+          copy: src=code/raspihwsensor/raspihwsensor.py dest=/usr/local/bin/raspihwsensor owner=root group=root mode=0755
+        - name: RPi Hardware Sensor - Copy service script
+          copy: src=code/raspihwsensor/raspihwsensor.service dest=/etc/systemd/system/raspihwsensor.service owner=root group=root mode=0644
+        - name: RPi Hardware Sensor - Copy configuration file
+          template: src=code/raspihwsensor/raspihwsensor.json.j2 dest=/home/pi/raspihwsensor.json owner=pi group=pi mode=0644
+        - name: RPi Hardware Sensor - Start and enable service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: raspihwsensor
 
     - name: Copy FR24 Stats Push scripts
       copy: src=code/fr24-stats-push/fr24-stats-push.py dest=/usr/local/bin/fr24-stats-push owner=root group=root mode=0755
