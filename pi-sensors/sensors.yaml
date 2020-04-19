@@ -111,3 +111,32 @@
             daemon_reload: yes
             name: doorsensor
       when: door_sensor == "yes"
+
+    - name: Install Camera Packages
+      block:
+        - name: RPi Camera - Install additional packages
+          apt:
+            name:
+              - cmake
+              - liblog4cpp5-dev
+              - libv4l-dev
+            state: present
+        - name: RPi Camera - Download v4l2rtspserver repo from GitHub
+          git:
+            repo: https://github.com/mpromonet/v4l2rtspserver.git
+            dest: /home/pi/v4l2rtspserver
+            depth: 1
+            version: master
+        - name: RPi Camera - Make and Install v4l2rtspserver
+          shell: cmake . ; make ; sudo make install
+          args:
+            chdir: /home/pi/v4l2rtspserver
+        - name: RPi Camera - Copy the camera service script
+          copy: src=code/camera/camera.service dest=/etc/systemd/system/camera.service owner=root group=root mode=0644 
+        - name: Start and enable the camera  service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: camera
+      when: camera == "yes"
