@@ -61,7 +61,7 @@ client.loop_start()
 
 # Setup the GPIO pins
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(int(data['gpioPin_button']), GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(int(data['gpioPin_button']), GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(int(data['gpioPin_relay']), GPIO.OUT, initial=1)
 
 # Set the initial state of the doorbell button
@@ -71,14 +71,14 @@ bellPressed = False
 try:
     while True:
         # Lets see if the button has been pressed
-        if GPIO.input(int(data['gpioPin_button'])) == GPIO.HIGH and bellPressed == False:
+        if GPIO.input(int(data['gpioPin_button'])) == GPIO.LOW and bellPressed == False:
             print("Doorbell Pressed")
             bellPressed = True
             # Set the GPIO to 0 to cause the relay to switch ON
             GPIO.output(int(data['gpioPin_relay']),0)
             # Push Payload to MQTT
             msg = client.publish(str(data['deviceLocation']) + "/" + str(data['bellName']) + "/state", "ON")
-        if GPIO.input(int(data['gpioPin_button'])) == GPIO.LOW and bellPressed == True:
+        if GPIO.input(int(data['gpioPin_button'])) == GPIO.HIGH and bellPressed == True:
             print('Reset')
             bellPressed = False
             # Set the GPIO to 1 to cause the relay to switch OFF
