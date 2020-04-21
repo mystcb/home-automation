@@ -59,12 +59,13 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 | ------------- | :---: | ------------- | ------------- | ------------- |
 | [Philips Hue Outdoor Motion Sensor](https://amzn.to/2JTEhHx) | 1 | Zigbee | [Philips Hue Light](https://www.home-assistant.io/components/light.hue/) | Trigger the outdoor lights |
 
-## Power Switches
+## Power Switches / Monitoring
 
 | Device  | Quantity | Connection | Home Assistant | Notes |
 | ------------- | :---: | ------------- | ------------- | ------------- |
 | [TRÅDFRI Wireless control outlet](https://www.ikea.com/gb/en/p/tradfri-wireless-control-outlet-00364477/) | 6 | Zigbee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | Controls multiple lamps and devices
 | [TP-Link Kasa Smart Plug HS110](https://amzn.to/2xlbJUA) | 4 | Wireless | [TP-Link Kasa Smart](https://www.home-assistant.io/integrations/tplink/) | Also monitors power usage |
+| [Power HAT (RPICT3T1) for Raspberry Pi](http://lechacalshop.com/gb/internetofthing/26-raspberrypi-1x-current-sensor-adaptor-1-voltage-emoncms.html) | 1 + 1 Clip | Wireless | [MQTT](https://www.home-assistant.io/integrations/mqtt/) | Clip on sensor to monitor power usage |
 
 ## Network
 
@@ -89,3 +90,9 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 | [Pi-hole](https://pi-hole.net) | 2 | Ethernet | [Pi-Hole Sensor](https://www.home-assistant.io/components/sensor.pi_hole/) | Ad blocking. Instance runs within a [Raspberry Pi Zero W](https://thepihut.com/products/raspberry-pi-zero-w) |
 | [MQTT Alarm Panel](https://github.com/thanksmister/android-mqtt-alarm-panel)| 2 | Wireless | [Manual MQTT](https://www.home-assistant.io/integrations/manual_mqtt/) | Alarm Panel Software |
 | [LineageOS](https://lineageos.org/) | 2 | N/A | N/A | Replacement Android Software for [Amazon Kindke Fire 7" 2015](https://uk.webuy.com/product-detail?id=samasv98ln05b&categoryName=tablets-android&superCatName=computing&title=amazon-kindle-fire-8gb-7%22-2015-5th-generation-b) 
+
+## Other Items / Misc.
+
+| Device  | Quantity | Connection | Home Assistant | Notes |
+| ------------- | :---: | ------------- | ------------- | ------------- |
+| [Elegoo 4 Channel Relay Board](https://amzn.to/2Kmcr6W) | 1 | Wireless | MQTT](https://www.home-assistant.io/integrations/mqtt/) | Relay trigger for Doorbell |
