@@ -164,9 +164,17 @@
           args:
             chdir: /home/pi/v4l2rtspserver
           when: v4l2repo.changed
+        - name: RPi Camera - Copy the awb service script
+          copy: src=code/camera/awb.service dest=/etc/systemd/system/awb.service owner=root group=root mode=0644 
         - name: RPi Camera - Copy the camera service script
           copy: src=code/camera/camera.service dest=/etc/systemd/system/camera.service owner=root group=root mode=0644 
-        - name: Start and enable the camera  service
+        - name: Start and enable the awb service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: awb          
+        - name: Start and enable the camera service
           systemd:
             state: started
             enabled: yes

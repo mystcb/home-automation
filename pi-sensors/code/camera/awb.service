@@ -1,0 +1,12 @@
+[Unit]
+Description=AWB
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/vcdbg set awb_mode 0 
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

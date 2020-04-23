@@ -1,6 +1,7 @@
 [Unit]
 Description=PiCamera RSTP Service
-After=network.target
+Requires=awb.service
+After=awb.service
 
 [Service]
 Type=idle
