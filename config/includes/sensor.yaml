@@ -66,6 +66,12 @@
     state_topic: "orangeroom/sensor1"
     unit_of_measurement: '%'
     value_template: "{{ value_json.humidity }}"
+  - platform: mqtt
+    unique_id: orange_room_cpu_temp
+    name: "Orange Room Sensor: CPU Temperature"
+    state_topic: "orangeroom/sensor1/system"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
     
 # Hallway BME680 Sensor      
   - platform: mqtt
@@ -84,8 +90,14 @@
     unit_of_measurement: '%'
     value_template: "{{ value_json.humidity }}"
   - platform: mqtt
+    unique_id: hallway_cpu_temp
+    name: "Hallway Sensor: CPU Temperature"
+    state_topic: "hallway/sensor1/system"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
   
-# Bedroom BME680 Sensor  
+# Bedroom BME680 Sensor
+  - platform: mqtt
     name: "Bedroom Temperature"
     state_topic: "bedroom/sensor1"
     unit_of_measurement: '°C'
@@ -100,6 +112,12 @@
     state_topic: "bedroom/sensor1"
     unit_of_measurement: '%'
     value_template: "{{ value_json.humidity }}"
+  - platform: mqtt
+    unique_id: bedroom_cpu_temp
+    name: "Bedroom Sensor: CPU Temperature"
+    state_topic: "bedroom/sensor1/system"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
     
 # Conservatory BME680 Sensor  
   - platform: mqtt
@@ -117,13 +135,34 @@
     state_topic: "conservatory/sensor1"
     unit_of_measurement: '%'
     value_template: "{{ value_json.humidity }}"
+  - platform: mqtt
+    unique_id: conservatory_cpu_temp
+    name: "Conservatory Sensor: CPU Temperature"
+    state_topic: "conservatory/sensor1/system"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
     
 # Flight Radar Pi Tracker
   - platform: mqtt
+    unique_id: flights_tracked
     name: "Flights Tracked"
     state_topic: "fr24/tracked_aircraft"
     icon: mdi:airplane
     unit_of_measurement: 'aircraft'
+  - platform: mqtt
+    unique_id: fr24_cpu_temp
+    name: "FR24: CPU Temperature"
+    state_topic: "loft/fr24/system"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
+    
+# Garage Sensors
+  - platform: mqtt
+    unique_id: garage_cpu_temp
+    name: "Garage Sensor: CPU Temperature"
+    state_topic: "garage/sensor1/system"
+    unit_of_measurement: '°C'
+    value_template: "{{ value_json.temperature }}"
     
 # Plex Server Details    
   - platform: plex
