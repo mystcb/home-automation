@@ -39,3 +39,4 @@ spotify: !include includes/spotify.yaml
 mailgun: !include includes/mailgun.yaml
 notify: !include includes/notify.yaml
 lametric: !include includes/lametric.yaml
+camera: !include includes/camera.yaml
