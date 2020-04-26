@@ -4,3 +4,5 @@ media_player.living_room:
     entity_picture: 'https://s3.eu-west-2.amazonaws.com/home-assist-assets/images/roku.png'
 device_tracker.colins:
     name: "Colin's iPhone"
+binary_sensor.front_doorbell:
+    icon: mdi:bell-ring
