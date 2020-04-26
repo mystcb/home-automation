@@ -8,7 +8,12 @@
   - platform: mqtt
     name: "Conservatory Doors"
     state_topic: "conservatory/conservatorydoor/state"
-    device_class: "door"    
+    device_class: "door"  
+    
+# Doorbell
+  - platform: mqtt
+    name: "Front Doorbell"
+    state_topic: "hallway/doorbell/state"
     
 # PIR Movement Sensor
   - platform: mqtt
@@ -43,6 +48,11 @@
     host: !secret conservatory_sensor_host
     count: 2
     scan_interval: 30    
+  - platform: ping
+    name: "Garage Sensor Check"
+    host: !secret garage_sensor_host
+    count: 2
+    scan_interval: 30  
   - platform: ping
     name: "Sakura Status Check"
     host: !secret sakura_sensor_host
