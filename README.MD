@@ -14,6 +14,7 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 | [Phillips Hue Hub v2](https://amzn.to/2WnjUHd) | 1 | Ethernet | [Philips Hue](https://www.home-assistant.io/components/hue/) | Used to control Phillips Hue Color, Lux, and White bulbs |
 | [Amazon Echo Dot](https://amzn.to/2WnjUHd) | 1 | Wireless | [Amazon Alexa](https://www.home-assistant.io/components/alexa/) | Voice control of the Home Assistant when away from my computer |
 | [dresden elektronik ConBee II](https://amzn.to/3a0vRsj) | 1 | USB | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | Hub used for IKEA and other devices |
+| [Hozelock Cloud Controller Hub](https://www.homebase.co.uk/hozelock-cloud-controller-for-automatic-watering-system_p366624) | 1 | Ethernet | [RESTful Command](https://www.home-assistant.io/integrations/rest_command/) | Garden Watering |
 
 ## Lighting
 
@@ -64,7 +65,7 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 | Device  | Quantity | Connection | Home Assistant | Notes |
 | ------------- | :---: | ------------- | ------------- | ------------- |
 | [TRÅDFRI Wireless control outlet](https://www.ikea.com/gb/en/p/tradfri-wireless-control-outlet-00364477/) | 6 | Zigbee | [deCONZ](https://www.home-assistant.io/integrations/deconz/) | Controls multiple lamps and devices
-| [TP-Link Kasa Smart Plug HS110](https://amzn.to/2xlbJUA) | 4 | Wireless | [TP-Link Kasa Smart](https://www.home-assistant.io/integrations/tplink/) | Also monitors power usage |
+| [TP-Link Kasa Smart Plug HS110](https://amzn.to/2xlbJUA) | 6 | Wireless | [TP-Link Kasa Smart](https://www.home-assistant.io/integrations/tplink/) | Also monitors power usage |
 | [Power HAT (RPICT3T1) for Raspberry Pi](http://lechacalshop.com/gb/internetofthing/26-raspberrypi-1x-current-sensor-adaptor-1-voltage-emoncms.html) | 1 + 1 Clip | Wireless | [MQTT](https://www.home-assistant.io/integrations/mqtt/) | Clip on sensor to monitor power usage |
 
 ## Network
@@ -78,8 +79,10 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 ## Hardware
 | Device  | Quantity | Connection | Home Assistant | Notes |
 | ------------- | :---: | ------------- | ------------- | ------------- |
-| [Raspberry Pi Zero W](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-w)| 4 | Wireless | N/A | Base for the DIY sensors |
-| [Raspberry Pi Zero v1.3](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero) | 3 | USB WiFi | N/A | Base for the DIY sensors |
+| [Raspberry Pi Zero W](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero-w)| 5 | Wireless | N/A | Base for the DIY sensors |
+| [Raspberry Pi Zero v1.3](https://thepihut.com/collections/raspberry-pi/products/raspberry-pi-zero) | 4 | USB WiFi | N/A | Base for the DIY sensors |
+| [Raspberry Pi NoIR Camera V2](https://www.raspberrypi.org/products/pi-noir-camera-v2/) | 1 | N/A | [motionEye Add-On](https://github.com/hassio-addons/addon-motioneye) | Night vision camera |
+| [Raspberry Pi Camera V2](https://thepihut.com/collections/raspberry-pi-camera/products/raspberry-pi-camera-module) | 1 | N/A | [motionEye Add-On](https://github.com/hassio-addons/addon-motioneye) | HD Camera |
 | [Intel NUC i7](https://www.intel.com/content/www/us/en/products/boards-kits/nuc/kits/nuc5i7ryh.html) | 1 | Ethernet | Yes! | Upgrade from an older RPi2
 | [Amazon Kindke Fire 7" 2015](https://uk.webuy.com/product-detail?id=samasv98ln05b&categoryName=tablets-android&superCatName=computing&title=amazon-kindle-fire-8gb-7%22-2015-5th-generation-b) | 2 | Wireless | [MQTT Alarm Panel](https://github.com/thanksmister/android-mqtt-alarm-panel) | Alarm panels and Appdaemon Dashboard |
 
@@ -95,4 +98,4 @@ Setup for my [Home Assistant](https://home-assistant.io) including all sensor sc
 
 | Device  | Quantity | Connection | Home Assistant | Notes |
 | ------------- | :---: | ------------- | ------------- | ------------- |
-| [Elegoo 4 Channel Relay Board](https://amzn.to/2Kmcr6W) | 1 | Wireless | MQTT](https://www.home-assistant.io/integrations/mqtt/) | Relay trigger for Doorbell |
+| [Elegoo 4 Channel Relay Board](https://amzn.to/2Kmcr6W) | 1 | Wireless | [MQTT](https://www.home-assistant.io/integrations/mqtt/) | Relay trigger for Doorbell |
