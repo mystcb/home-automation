@@ -5,7 +5,7 @@ After=awb.service
 
 [Service]
 Type=idle
-ExecStart=v4l2rtspserver -W 1640 -H 1232 -F 30 -P 8554 /dev/video0
+ExecStart=v4l2rtspserver -W 1640 -H 1232 -F 15 -P 8554 /dev/video0
 User=pi
 
 [Install]
