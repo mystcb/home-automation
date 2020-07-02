@@ -1,0 +1,11 @@
+{
+    "clientId": "device name",
+    "deviceLocation": "device location",
+    "deviceName": "device name",
+    "mqttHost": "HA Hostname",
+    "mqttUsername": "username",
+    "mqttPassword": "password",
+    "wifiEssid": "ESSID",
+    "wifiPassword": "password",
+    "sleepLength": "10000"
+}
