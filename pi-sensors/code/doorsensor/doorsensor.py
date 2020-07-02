@@ -73,12 +73,12 @@ try:
                 print('Door Closed: ' + str(data['doorName']))
                 stateD1 = True
                 # Push Payload to MQTT
-                msg = client.publish(str(data['deviceLocation']) + "/" + str(data['doorName']) + "/state", "OFF")
+                msg = client.publish(str(data['deviceLocation']) + "/" + str(data['doorName']) + "/state", "OFF", retain=True)
         if GPIO.input(int(data['gpioPin'])) == GPIO.LOW and stateD1 == True:
                 print ('Door Open: ' + str(data['doorName']))
                 stateD1 = False
                 # Push Payload to MQTT
-                msg = client.publish(str(data['deviceLocation']) + "/" + str(data['doorName']) + "/state", "ON")
+                msg = client.publish(str(data['deviceLocation']) + "/" + str(data['doorName']) + "/state", "ON", retain=True)
         time.sleep(0.5)
 except KeyboardInterrupt:
     # If we interupt the process, push on to close the connection
