@@ -1,0 +1,245 @@
+- hosts: aerials
+  become: true
+  tasks:
+    - meta: flush_handlers
+
+    - name: Import Secrets
+      include_vars: secrets.yaml
+
+    - name: Ensure hostname is set
+      hostname: name={{ inventory_hostname }}
+      when: not inventory_hostname is match('(\d{1,3}\.){3}\d{1,3}')
+
+    - name: Deploy the SSH Key
+      authorized_key: user=pi
+                      key="{{ lookup('file','/Users/colin/.ssh/id_ed25519.pub') }}"
+                      state=present
+
+    - name: Update hosts file with hostname
+      lineinfile:
+        dest=/etc/hosts
+        regexp="^{{ ansible_default_ipv4.address }}.+$"
+        line="{{ ansible_default_ipv4.address }} {{ ansible_fqdn }} {{ ansible_hostname }}"
+
+    - name: Configure the MOTD
+      template: src=templates/motd.j2 dest=/etc/motd owner=root group=root mode=0644
+
+    - name: Boot changes for GPS HAT for NTP
+      block:
+        - name: Update the boot config to add additional items
+          lineinfile:
+            dest=/boot/config.txt
+            regexp="^{{ item }}"
+            line="{{ item }}"
+          with_items:
+            - "dtoverlay=disable-bt"
+            - "dtoverlay=pps-gpio,gpiopin=4"
+            - "nohz=off"
+          register: reboot_gps_hat_boot
+        - name: Update the boot command to remove the console section
+          replace:
+            path: /boot/cmdline.txt
+            regexp: '/dwc_otg\.lpm_enable=0 console=serial0,115200 /gm'
+            replace: ""
+          register: reboot_gps_hat_boot
+        - name: Stop and disable the serial-gettty service
+          systemd:
+            state: stopped
+            enabled: no
+            daemon_reload: yes
+            name: serial-getty@ttyAMA0.service
+        - name: Stop and disable the hciuart service
+          systemd:
+            state: stopped
+            enabled: no
+            daemon_reload: yes
+            name: hciuart
+        - name: Set the scaling_governor on the CPU to performance
+          lineinfile:
+            dest=/etc/rc.local
+            regexp="^echo \"performance\""
+            insertbefore="exit 0"
+            line='echo "performance" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor'
+          register: reboot_gps_hat_boot
+      when: ntp == "yes"
+
+    - name: Reboot to enable boot changes (if required)
+      reboot:
+        reboot_timeout: 120
+        test_command: mount
+      when: reboot_gps_hat_boot.changed
+
+    - name: Update apt packages
+      apt: update_cache=yes upgrade=yes
+
+    - name: Install packages
+      apt: 
+        name: 
+          - python3
+          - python3-pip
+          - python3-gpiozero
+          - vim
+          - watchdog
+        state: present
+
+    - name: Get requirements from python3-pip
+      pip: 
+        executable: /usr/bin/pip3
+        name:
+          - paho-mqtt
+
+    - name: Install Pi HW Sensors
+      block:
+        - name: RPi Hardware Sensor - Copy sensor script
+          copy: src=code/raspihwsensor/raspihwsensor.py dest=/usr/local/bin/raspihwsensor owner=root group=root mode=0755
+        - name: RPi Hardware Sensor - Copy service script
+          copy: src=code/raspihwsensor/raspihwsensor.service dest=/etc/systemd/system/raspihwsensor.service owner=root group=root mode=0644
+        - name: RPi Hardware Sensor - Copy configuration file
+          template: src=code/raspihwsensor/raspihwsensor.json.j2 dest=/home/pi/raspihwsensor.json owner=pi group=pi mode=0644
+        - name: RPi Hardware Sensor - Start and enable service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: raspihwsensor
+
+    - name: Install Watchdog
+      block:
+        - name: Watchdog - Copy configuration file
+          copy: src=templates/watchdog.conf.j2 dest=/etc/watchdog.conf owner=root group=root mode=0755
+        - name: Watchdog - Start and enable service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: watchdog
+
+    - name: Install the Flight Scanning system
+      when: flight_radar == "yes"
+      block:
+        - name: Install dump1090-mutability for the SDR stick
+          apt:
+            name:
+              - dump1090-mutability
+        - name: Copy over the configuration file for dump1090-mutability
+          template: src=templates/dump1090-mutability.j2 dest=/etc/default/dump1090-mutability owner=root group=root mode=0644
+          register: dump1090_config
+        - name: Reboot to enable mutability changes
+          reboot:
+            reboot_timeout: 120
+            test_command: mount
+          when: dump1090_config.changed
+
+    - name: Instal Flight Scanning Stats Push service
+      when: flight_radar_stats == "yes" and flight_radar == "yes"
+      block: 
+        - name: Copy Flight Scanner Stats Push scripts
+          copy: src=code/fr24-stats-push/fr24-stats-push.py dest=/usr/local/bin/fr24-stats-push owner=root group=root mode=0755
+        
+        - name: Copy Flight Scanner Stats Push service scripts
+          copy: src=code/fr24-stats-push/fr24-stats-push.service dest=/etc/systemd/system/fr24-stats-push.service owner=root group=root mode=0644
+            
+        - name: Copy the Flight Scanner Stats Push config to home
+          template: src=code/fr24-stats-push/fr24-stats-push.json.j2 dest=/home/pi/fr24-stats-push.json owner=pi group=pi mode=0644
+        
+        - name: Start and enable the Flight Scanner Stats Push service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: fr24-stats-push
+
+    - name: Install the FlightRadar24 Tracker
+      when: fr24 == "yes"
+      block:
+        - name: Install the FlightRadar GPG key from the key server
+          apt_key:
+            keyserver: pool.sks-keyservers.net
+            id: C969F07840C430F5
+        - name: Add the FlightRadar24 repo to the sources list
+          apt_repository:
+            repo: deb http://repo.feed.flightradar24.com flightradar24 raspberrypi-stable
+            state: present
+            update_cache: yes
+        - name: Install the fr24feed service
+          apt:
+            name: fr24feed
+            state: present
+        - name: Copy the fr24feed configuration file
+          template: src=templates/fr24feed.ini.j2 dest=/etc/fr24feed.ini owner=root group=root mode=0644
+          register: fr24_config
+        - name: Restart the fr24feed when configuration changed
+          systemd:
+            state: restarted
+            daemon_reload: yes
+            name: fr24feed
+          when: fr24_config.changed
+
+    - name: Install PiAware Flight Tracker
+      when: piaware == "yes"
+      block: 
+        - name: Copy over the abcd567 GPG key to the Pi Home Folder
+          copy: src=binary/abcd567-KEY.gpg dest=/home/pi/abcd567-KEY.gpg owner=pi group=pi mode=0644      
+        - name: Install the abcd567 GPG key from the file§
+          apt_key:
+            file: /home/pi/abcd567-KEY.gpg
+            state: present
+        - name: Add the abcd567a repo to the sources list
+          apt_repository:
+            repo: deb https://abcd567a.github.io/ppa/piaware ./
+            state: present
+            update_cache: yes
+        - name: Install the piaware services
+          apt:
+            name: 
+              - piaware
+            state: present
+        #- name: Install the PiAware GPG key from the key server
+        #  apt_key:
+        #    keyserver: keyserver.ubuntu.com
+        #    id: B931BB28DE85F0DD
+        #- name: Add the PiAware repo to the sources list
+        #  apt_repository:
+        #    repo: deb http://flightaware.com/adsb/piaware/files/packages bullseye piaware
+        #    state: present
+        #    update_cache: yes
+        #- name: Install the piaware service
+        #  apt:
+        #    name: piaware
+        #    state: present
+        - name: Copy the piaware configuration file
+          template: src=templates/piaware.conf.j2 dest=/etc/piaware.conf owner=root group=root mode=0644
+          register: piaware_config
+        - name: Copy the piaware feeder ID
+          template: src=templates/feeder_id.j2 dest=/var/cache/piaware/feeder_id owner=root group=root mode=0644
+          register: piaware_config
+        - name: Copy the piaware location file
+          template: src=templates/location.j2 dest=/var/cache/piaware/location owner=root group=root mode=0644
+          register: piaware_config 
+        - name: Copy the piaware location.env file
+          template: src=templates/location.env.j2 dest=/var/cache/piaware/location.env owner=root group=root mode=0644
+          register: piaware_config   
+        - name: Restart the piaware when configuration changed
+          systemd:
+            state: restarted
+            daemon_reload: yes
+            name: piaware
+          when: piaware_config.changed   
+
+    - name: Install PlaneFinder Flight Tracker
+      when: plane_finder == "yes"
+      block: 
+        - name: Copy pfclient deb file to Pi home folder
+          copy: src=binary/pfclient_5.0.161_armhf.deb dest=/home/pi/pfclient_5.0.161_armhf.deb owner=pi group=pi mode=0644
+        - name: Install the PFclient Service
+          apt:
+            deb: /home/pi/pfclient_5.0.161_armhf.deb
+        - name: Copy over the pfclient-config.json file
+          template: src=templates/pfclient-config.json.j2 dest=/etc/pfclient-config.json owner=root group=root mode=0644
+          register: plane_finder_config
+        - name: Restart the pfclient service when configuration changed
+          systemd:
+            state: restarted
+            daemon_reload: yes
+            name: pfclient
+          when: plane_finder_config.changed  

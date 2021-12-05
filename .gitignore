@@ -24,3 +24,6 @@ __pycache__/
 
 # Apple Files
 .DS_Store
+
+# Additional Files
+ansible-cmd.sh
