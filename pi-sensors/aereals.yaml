@@ -63,11 +63,18 @@
           register: reboot_gps_hat_boot
       when: ntp == "yes"
 
+    - name: Enable Watchdog on boot
+      lineinfile:
+        dest=/boot/config.txt
+        regexp="^dtparam=watchdog=on"
+        line="dtparam=watchdog=on"
+      register: reboot_watchdog
+
     - name: Reboot to enable boot changes (if required)
       reboot:
         reboot_timeout: 120
         test_command: mount
-      when: reboot_gps_hat_boot.changed
+      when: reboot_gps_hat_boot.changed or reboot_watchdog.changed
 
     - name: Update apt packages
       apt: update_cache=yes upgrade=yes
