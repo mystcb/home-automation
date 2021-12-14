@@ -178,6 +178,7 @@
         - name: Restart the fr24feed when configuration changed
           systemd:
             state: restarted
+            enabled: yes
             daemon_reload: yes
             name: fr24feed
           when: fr24_config.changed
