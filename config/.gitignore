@@ -29,3 +29,6 @@ alexa_media.*
 
 # Node Red
 node-red
+
+# HA Version
+.HA_VERSION
