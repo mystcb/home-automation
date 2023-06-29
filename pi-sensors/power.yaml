@@ -12,7 +12,7 @@
 
     - name: Deploy the SSH Key
       authorized_key: user=pi
-                      key="{{ lookup('file','/Users/colin/.ssh/id_ed25519.pub') }}"
+                      key="{{ lookup('file','/Users/colin/.ssh/colin-2021.pub') }}"
                       state=present
 
     - name: Update hosts file with hostname
@@ -25,17 +25,20 @@
       template: src=templates/motd.j2 dest=/etc/motd owner=root group=root mode=0644
 
     - name: Enable UART on boot
-      lineinfile:
-        dest=/boot/config.txt
-        regexp="^enable_uart=1"
-        line="enable_uart=1"
-      register: reboot
+      when: sensor_type == "power"
+      block: 
+        - name: Enable UART in boot/config.txt
+          lineinfile:
+            dest=/boot/config.txt
+            regexp="^enable_uart=1"
+            line="enable_uart=1"
+          register: reboot
 
-    - name: Reboot on enable of UART (if required)
-      reboot:
-        reboot_timeout: 120
-        test_command: mount
-      when: reboot.changed
+        - name: Reboot on enable of UART (if required)
+          reboot:
+            reboot_timeout: 120
+            test_command: mount
+          when: reboot.changed
 
     - name: Update and packages on the sensors
       apt: update_cache=yes upgrade=yes
@@ -58,16 +61,36 @@
           - paho-mqtt
           - pyserial
 
-    - name: Copy power sensor scripts
-      copy: src=code/powersensor/powersensor.py dest=/usr/local/bin/powersensor owner=root group=root mode=0755
-    - name: Copy power sensor service scripts
-      copy: src=code/powersensor/powersensor.service dest=/etc/systemd/system/powersensor.service owner=root group=root mode=0644
-    - name: Copy the power sensor config to home
-      template: src=code/powersensor/powersensor.json.j2 dest=/home/pi/powersensor.json owner=pi group=pi mode=0644
-    - name: Start and enable the power sensor service
-      systemd:
-        state: started
-        enabled: yes
-        daemon_reload: yes
-        name: powersensor
-    
+    - name: Install the Power Sensor Scripts
+      when: sensor_type == "power"
+      block: 
+        - name: Copy power sensor scripts
+          copy: src=code/powersensor/powersensor-RPICT3V1.py dest=/usr/local/bin/powersensor owner=root group=root mode=0755
+        - name: Copy power sensor service scripts
+          copy: src=code/powersensor/powersensor.service dest=/etc/systemd/system/powersensor.service owner=root group=root mode=0644
+        - name: Copy the power sensor config to home
+          template: src=code/powersensor/powersensor.json.j2 dest=/home/pi/powersensor.json owner=pi group=pi mode=0644
+        - name: Start and enable the power sensor service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: powersensor
+
+    - name: Install the Solar Sensor Scripts
+      when: sensor_type == "solar"
+      block: 
+        - name: Copy solar sensor scripts
+          copy: src=code/solarsensor/solarsensor.py dest=/usr/local/bin/solarsensor owner=root group=root mode=0755
+        - name: Copy SolarMax python library
+          copy: src=code/solarsensor/solarmax3.py dest=/usr/lib/python3.9/solarmax3.py owner=root group=root mode=0644
+        - name: Copy solar sensor service scripts
+          copy: src=code/solarsensor/solarsensor.service dest=/etc/systemd/system/solarsensor.service owner=root group=root mode=0644
+        - name: Copy the solar sensor config to home
+          template: src=code/solarsensor/solarsensor.json.j2 dest=/home/pi/solarsensor.json owner=pi group=pi mode=0644
+        - name: Start and enable the solar sensor service
+          systemd:
+            state: started
+            enabled: yes
+            daemon_reload: yes
+            name: solarsensor    
