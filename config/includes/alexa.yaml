@@ -1,4 +1,6 @@
 smart_home:
+  locale: en-GB
+  endpoint: https://api.eu.amazonalexa.com/v3/events
   filter:
     exclude_domains:
       - light
@@ -6,13 +8,34 @@ smart_home:
       - group
       - sensor
       - media_player
+      - switch
+      - binary_sensor
+      - input_number
+      - input_sensor
+      - input_boolean
+      - scene
+      - person
+      - zone
+      - device_tracker
+      - update
+      - weather
+      - sun
+      - camera
+      - timer
     include_entities:
-      - sensor.dark_sky_temperature
-      - sensor.hallway_temperature
-      - sensor.orange_room_temperature
-      - light.bedroom_lamp
+      - light.kitchen
+      - light.dining_room
+      - light.hallway
+      - light.study
+      - light.craft_room
+      - light.bedroom_lamp_colin
+      - light.living_room_uplight
+      - light.living_room_reading_light
       - light.living_room_lamp
-      - light.living_room_lamp_2
-      - light.loft
-      - light.uplight
-      - light.reading_light_2
+      - light.colin_s_office_lamp
+      - light.guest_room
+      - light.living_room_wall
+      - binary_sensor.front_door_sensor_iaszone
+      - binary_sensor.hallway_motion_sensor_iaszone
+      - binary_sensor.landing_motion_sensor_iaszone
+

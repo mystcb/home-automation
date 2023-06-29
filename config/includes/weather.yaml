@@ -1,8 +1,0 @@
-- platform: darksky
-  api_key: !secret darksky_apikey
-  units: uk
-- platform: metoffice
-  api_key: !secret met_office_api_key
-- platform: openweathermap
-  api_key: !secret openweathermap_api_key
-  mode: freedaily

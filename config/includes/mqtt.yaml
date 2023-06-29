@@ -1,0 +1,147 @@
+##### Sensors for different parts of the house #####
+# 
+# Note that all sensors have to have a double space at the start for YAML
+#
+#####
+
+### MQTT Sensors
+  sensor:
+
+    ### Power Sensor (MQTT)
+  - unique_id: power_usage
+    name: 'Power Usage'
+    state_topic: 'garage/powersensor'
+    device_class: "power"
+    icon: mdi:flash
+    unit_of_measurement: 'W'
+    value_template: "{{ value_json.sensor3 }}"
+
+    ### Solar Sensor (MQTT)
+  - unique_id: solar_power
+    name: 'Solar Power'
+    state_topic: 'loft/solarsensor'
+    device_class: "power"
+    icon: mdi:solar-power
+    unit_of_measurement: 'W'
+    value_template: "{{ value_json.sensor1.current }}"
+
+    ### Loft01 - Flights Tracked
+  - unique_id: flights_tracked
+    name: 'Flights Tracked'
+    state_topic: 'loft01/tracked_aircraft'
+    icon: mdi:airplane
+    unit_of_measurement: 'aircraft'
+
+
+
+    ### Colin's Office Sensors
+    ### BME680 Sensors
+  - unique_id: office_temperature
+    name: 'Office Room Temperature'
+    state_topic: 'office/sensor1'
+    unit_of_measurement: '°C'
+    value_template: '{{ value_json.temperature }}'
+  - unique_id: office_pressure
+    name: 'Office Room Pressure'
+    state_topic: 'office/sensor1'
+    unit_of_measurement: 'hPa'
+    value_template: '{{ value_json.pressure }}'
+  - unique_id: office_humidity
+    name: 'Office Room Humidity'
+    state_topic: 'office/sensor1'
+    unit_of_measurement: '%'
+    value_template: '{{ value_json.humidity }}'
+  - unique_id: office_room_cpu_temp
+    name: 'Office Room Sensor: CPU Temperature'
+    state_topic: 'office/sensor1/system'
+    unit_of_measurement: '°C'
+    value_template: '{{ value_json.temperature }}'
+   
+
+   ### Glow IHD for Elecricity and Gas
+  - unique_id: "smart_meter_electricity_power"
+    name: "Smart Meter Electricty: Power"
+    state_topic: "glow/1234567890AB/SENSOR/electricitymeter"
+    device_class: "power"
+    unit_of_measurement: "W"
+    state_class: "measurement"
+    value_template: "{{ (value_json['electricitymeter']['power']['value'] * 1000) | round() }}"
+    icon: "mdi:flash"
+
+  - unique_id: "smart_meter_electricity_energy_import"
+    name: "Smart Meter Electricity: Energy Import"
+    state_topic: "glow/1234567890AB/SENSOR/electricitymeter"
+    device_class: "energy"
+    unit_of_measurement: "kWh"
+    state_class: "total_increasing"
+    value_template: >
+       {% if value_json['electricitymeter']['energy']['import']['cumulative'] == 0 %}
+         {{ states('sensor.smart_meter_electricity_energy_import') }}
+       {% else %}
+         {{ value_json['electricitymeter']['energy']['import']['cumulative'] }}
+       {% endif %}
+    icon: "mdi:flash"
+
+  - unique_id: "smart_meter_electricity_energy_export"
+    name: "Smart Meter Electricity: Energy Export"
+    state_topic: "glow/1234567890AB/SENSOR/electricitymeter"
+    device_class: "energy"
+    unit_of_measurement: "kWh"
+    state_class: "total_increasing"
+    value_template: >
+       {% if value_json['electricitymeter']['energy']['export']['cumulative'] == 0 %}
+         {{ states('sensor.smart_meter_electricity_export') }}
+       {% else %}
+         {{ value_json['electricitymeter']['energy']['export']['cumulative'] }}
+       {% endif %}
+    icon: "mdi:flash"
+
+  - unique_id: "smart_meter_gas_import"
+    name: "Smart Meter Gas: Import"
+    state_topic: "glow/1234567890AB/SENSOR/gasmeter"
+    device_class: "energy"
+    unit_of_measurement: "kWh"
+    state_class: "total_increasing"
+    value_template: >
+       {% if value_json['gasmeter']['energy']['import']['cumulative'] == 0 %}
+         {{ states('sensor.smart_meter_gas_import') }}
+       {% else %}
+         {{ value_json['gasmeter']['energy']['import']['cumulative'] }}
+       {% endif %}
+    icon: "mdi:fire"
+
+  - unique_id: "smart_meter_gas_power"
+    name: "Smart Meter Gas: Power"
+    state_topic: "glow/1234567890AB/SENSOR/gasmeter"
+    device_class: "power"
+    unit_of_measurement: "W"
+    state_class: "measurement"
+    value_template: "{{ (value_json['gasmeter']['power']['value'] * 1000) | round() }}"
+    icon: "mdi:fire"
+
+  - unique_id: "smart_meter_electricity_import_unit_rate"
+    name: "Smart Meter Electricity: Import Unit Rate"
+    state_topic: "glow/1234567890AB/SENSOR/electricitymeter"
+    device_class: "monetary"
+    unit_of_measurement: "GBP/kWh"
+    state_class: "measurement"
+    value_template: "{{ value_json['electricitymeter']['energy']['import']['price']['standingcharge'] }}"
+    icon: "mdi:cash"
+
+  - unique_id: "smart_meter_gas_import_unit_rate"
+    name: "Smart Meter Gas: Import Unit Rate"
+    state_topic: "glow/1234567890AB/SENSOR/gasmeter"
+    device_class: "monetary"
+    unit_of_measurement: "GBP/kWh"
+    state_class: "measurement"
+    value_template: "{{ value_json['gasmeter']['energy']['import']['price']['unitrate'] }}"
+    icon: "mdi:cash"
+
+  - unique_id: "smart_meter_gas_import_standing_charge"
+    name: "Smart Meter Gas: Import Standing Charge"
+    state_topic: "glow/1234567890AB/SENSOR/gasmeter"
+    device_class: "monetary"
+    unit_of_measurement: "GBP"
+    state_class: "measurement"
+    value_template: "{{ value_json['gasmeter']['energy']['import']['price']['standingcharge'] }}"
+    icon: "mdi:cash"

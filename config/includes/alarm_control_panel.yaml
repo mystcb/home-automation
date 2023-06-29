@@ -1,5 +1,5 @@
 - platform: manual_mqtt
-  name: "Primary Alarm Panel"
+  name: "Alarm Panel"
   state_topic: "home/alarm"
   command_topic: "home/alarm/set"
   pending_time: 30

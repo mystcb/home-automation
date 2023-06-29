@@ -1,8 +1,0 @@
-- name: Work
-  latitude: !secret latitide_work
-  longitude: !secret longitude_work
-  radius: 100
-- name: Parents
-  latitude: !secret latitude_parents
-  longitude: !secret longitude_parents
-  radius: 100

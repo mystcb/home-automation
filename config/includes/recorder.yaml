@@ -1,1 +1,4 @@
 db_url: !secret mysql_conn_string
+exclude:
+  entities:
+    - sensor.icloud3_event_log

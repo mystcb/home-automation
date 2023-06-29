@@ -1,1 +1,4 @@
-base_url: !secret external_url
+use_x_forwarded_for: true
+trusted_proxies:
+  - 172.30.33.0/24
+  - 10.100.0.0/24

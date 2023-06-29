@@ -1,4 +1,0 @@
-# Garage RPi NoIR camera
-- platform: ffmpeg
-  name: Garage Camera
-  input: !secret garage_camera_feed
