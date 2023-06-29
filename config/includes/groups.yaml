@@ -1,7 +1,0 @@
-loft_lights:
-  name: Loft Lights
-  entities:
-    - switch.loft_light_1
-    - switch.loft_light_2
-  icon: mdi:lightbulb
-  

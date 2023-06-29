@@ -1,14 +1,68 @@
-- id: weekly_backup
-  alias: Weekly Backup of Home Assistant
+- id: '1668965984994'
+  alias: Tumble Dryer Finished
+  description: Notify us when the Tumble Dryer has finished
+  use_blueprint:
+    path: leofabri/appliance-status-monitor.yaml
+    input:
+      appliance_socket: switch.tumble_dryer
+      appliance_power_sensor: sensor.tumble_dryer_energy_power
+      appliance_starting_power_threshold: 50
+      appliance_suspended_sensor: []
+      appliance_state_machine: input_select.tumble_dryer_state_machine
+      appliance_job_cycle: input_boolean.tumble_dryer_job_cycle
+      delayed_job_completion_timer: timer.tumble_druer_delayed_job_completion_timer
+      automation_self_trigger: input_boolean.tumble_dryer_automation_self_trigger
+      delayed_job_completion_duration: 300
+      actions_job_cycle_ends: []
+      appliance_finishing_power_threshold: 5
+- id: '1668970250849'
+  alias: Washing Machine Finished
+  description: Detects the washing machine status and lets us know when its done
+  use_blueprint:
+    path: leofabri/appliance-status-monitor.yaml
+    input:
+      appliance_socket: switch.washing_machine
+      appliance_power_sensor: sensor.tasmota_energy_power
+      appliance_starting_power_threshold: 50
+      appliance_state_machine: input_select.washing_machine_state_machine
+      appliance_job_cycle: input_boolean.washing_machine_job_cycle
+      delayed_job_completion_timer: timer.washing_machine_delayed_job_completion_timer
+      automation_self_trigger: input_boolean.washing_machine_automation_self_trigger
+      delayed_job_completion_duration: 60
+      actions_job_cycle_ends:
+      - service: notify.tokonatsu
+        data:
+          message: Washing Machine has finished
+          title: Washing Machine Finished
+          target:
+- id: '1674492919785'
+  alias: Disarm Alarmo with Mobile App Notification Action
+  description: Disables the Alarmo service when a push notification from HA has an
+    action to disarm
   trigger:
-    platform: time
-    at: '3:00:00'
-  condition:
-    condition: time
-    weekday:
-    - tue
+  - platform: event
+    event_type: mobile_app_notification_action
+    event_data:
+      action: alarmo_disarm
+  condition: []
   action:
-    service: hassio.snapshot_full
-    data_template:
-      name: '{{ now().strftime(''%Y-%m-%d'') }}-Home-Assistant'
-      password: !secret backup_password
+  - service: alarmo.disarm
+    data:
+      entity_id: alarm_control_panel.alarmo
+      code: '3074'
+  mode: single
+- id: '1675355688034'
+  alias: Dishwasher Finished
+  description: ''
+  use_blueprint:
+    path: leofabri/appliance-status-monitor.yaml
+    input:
+      appliance_socket: switch.dishwasher
+      appliance_power_sensor: sensor.dishwasher_energy_power
+      appliance_starting_power_threshold: 20
+      appliance_state_machine: input_select.dishwasher_state_machine
+      appliance_job_cycle: input_boolean.dishwasher_job_cycle
+      delayed_job_completion_timer: timer.dishwasher_delayed_job_completion_timer
+      automation_self_trigger: input_boolean.dishwasher_automation_self_trigger
+      actions_job_cycle_ends: []
+      delayed_job_completion_duration: 15

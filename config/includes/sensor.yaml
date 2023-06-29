@@ -1,267 +1,101 @@
-# Weather prediction
-  - platform: yr
-  - platform: darksky
-    api_key: !secret darksky_apikey
-    monitored_conditions:
-      - summary
-      - icon
-      - temperature
-      - apparent_temperature
-      - temperature_min
-      - temperature_max
-      - wind_bearing
-      - humidity
-      - precip_probability
-      - precip_intensity
-      - precip_type
-      - wind_speed
-      - pressure
-    forecast:
-      - 0
-      - 1
-    scan_interval:
-      minutes: 10
-  - platform: metoffice
-    api_key: !secret met_office_api_key
-    monitored_conditions:
-      - weather
-      - temperature
-      - feels_like_temperature
-      - wind_speed
-      - wind_direction
-      - wind_gust
-      - visibility
-      - visibility_distance
-      - uv
-      - precipitation
-      - humidity
-      
-# Resource stats of the RPi
-  - platform: cpuspeed
-    name: CPU
-  - platform: systemmonitor
-    resources:
-      - type: memory_free
-      - type: memory_use_percent
-      - type: processor_use
-      - type: last_boot
-      - type: disk_use
-        arg: /
-      - type: disk_use_percent
-        arg: /
-        
-# Orange Room BME680 Sensor  
-  - platform: mqtt
-    name: "Orange Room Temperature"
-    state_topic: "orangeroom/sensor1"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-  - platform: mqtt
-    name: "Orange Room Pressure"
-    state_topic: "orangeroom/sensor1"
-    unit_of_measurement: 'hPa'
-    value_template: "{{ value_json.pressure }}"
-  - platform: mqtt
-    name: "Orange Room Humidity"
-    state_topic: "orangeroom/sensor1"
-    unit_of_measurement: '%'
-    value_template: "{{ value_json.humidity }}"
-  - platform: mqtt
-    unique_id: orange_room_cpu_temp
-    name: "Orange Room Sensor: CPU Temperature"
-    state_topic: "orangeroom/sensor1/system"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-    
-# Hallway BME680 Sensor      
-  - platform: mqtt
-    name: "Hallway Temperature"
-    state_topic: "hallway/sensor1"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-  - platform: mqtt
-    name: "Hallway Pressure"
-    state_topic: "hallway/sensor1"
-    unit_of_measurement: 'hPa'
-    value_template: "{{ value_json.pressure }}"
-  - platform: mqtt
-    name: "Hallway Humidity"
-    state_topic: "hallway/sensor1"
-    unit_of_measurement: '%'
-    value_template: "{{ value_json.humidity }}"
-  - platform: mqtt
-    unique_id: hallway_cpu_temp
-    name: "Hallway Sensor: CPU Temperature"
-    state_topic: "hallway/sensor1/system"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-  
-# Bedroom BME680 Sensor
-  - platform: mqtt
-    name: "Bedroom Temperature"
-    state_topic: "bedroom/sensor1"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-  - platform: mqtt
-    name: "Bedroom Pressure"
-    state_topic: "bedroom/sensor1"
-    unit_of_measurement: 'hPa'
-    value_template: "{{ value_json.pressure }}"
-  - platform: mqtt
-    name: "Bedroom Humidity"
-    state_topic: "bedroom/sensor1"
-    unit_of_measurement: '%'
-    value_template: "{{ value_json.humidity }}"
-  - platform: mqtt
-    unique_id: bedroom_cpu_temp
-    name: "Bedroom Sensor: CPU Temperature"
-    state_topic: "bedroom/sensor1/system"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-    
-# Conservatory BME680 Sensor  
-  - platform: mqtt
-    name: "Conservatory Temperature"
-    state_topic: "conservatory/sensor1"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-  - platform: mqtt
-    name: "Conservatory Pressure"
-    state_topic: "conservatory/sensor1"
-    unit_of_measurement: 'hPa'
-    value_template: "{{ value_json.pressure }}"
-  - platform: mqtt
-    name: "Conservatory Humidity"
-    state_topic: "conservatory/sensor1"
-    unit_of_measurement: '%'
-    value_template: "{{ value_json.humidity }}"
-  - platform: mqtt
-    unique_id: conservatory_cpu_temp
-    name: "Conservatory Sensor: CPU Temperature"
-    state_topic: "conservatory/sensor1/system"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-    
-# Flight Radar Pi Tracker
-  - platform: mqtt
-    unique_id: flights_tracked
-    name: "Flights Tracked"
-    state_topic: "fr24/tracked_aircraft"
-    icon: mdi:airplane
-    unit_of_measurement: 'aircraft'
-  - platform: mqtt
-    unique_id: fr24_cpu_temp
-    name: "FR24: CPU Temperature"
-    state_topic: "loft/fr24/system"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-    
-# Garage Sensors
-  - platform: mqtt
-    unique_id: garage_cpu_temp
-    name: "Garage Sensor: CPU Temperature"
-    state_topic: "garage/sensor1/system"
-    unit_of_measurement: '°C'
-    value_template: "{{ value_json.temperature }}"
-    
-# Plex Server Details    
-  - platform: plex
-    name: "Morris Drive Plex"
-    host: plex.home.faereal.net
-    token: !secret plex_token
-    
-# Power Sensor    
-  - platform: mqtt
-    name: 'Power Usage'
-    state_topic: "understairs/powersensor"
-    icon: mdi:flash
-    unit_of_measurement: 'Watts'
-    value_template: "{{ value_json.sensor3 }}"
-    
-    
-# TP-Link Plug Sensors
+###
+# Random sensors which need to exist!
+###
+
+### Calculation for kWh for the power sensors
+  - platform: integration
+    source: sensor.power_usage
+    unique_id: power_usage_kwh
+    unit_prefix: k
+    unit_time: h
+
+### Calculation for kWh for the solar sensors
+  - platform: integration
+    source: sensor.solar_power
+    unique_id: solar_power_kwh
+    unit_prefix: k
+    unit_time: h
+
+### Calculation for kWh for the power sensor positive usage
+  - platform: integration
+    source: sensor.power_usage_positive
+    unique_id: power_usage_postive_kwh
+    unit_prefix: k
+    unit_time: h
+
+### Calculation for kWh for the power sensor return negative usage
+  - platform: integration
+    source: sensor.power_return_negative
+    unique_id: power_return_negative_kwh
+    unit_prefix: k
+    unit_time: h
+
+### Template sensors for more custom types
   - platform: template
     sensors:
-      washing_machine_amps:
-        friendly_name_template: "{{ states.switch.washing_machine.name}} Current"
-        value_template: '{{ states.switch.washing_machine.attributes["current_a"] | float }}'
-        unit_of_measurement: 'A'
-      washing_machine_watts:
-        friendly_name_template: "{{ states.switch.washing_machine.name}} Current Consumption"
-        value_template: '{{ states.switch.washing_machine.attributes["current_power_w"] | float }}'
+      ### Calculate the positive Watts for usage
+      power_usage_positive:
+        unique_id: power_usage_positive
         unit_of_measurement: 'W'
-      washing_machine_kwh:
-        friendly_name_template: "{{ states.switch.washing_machine.name}} Total Consumption"
-        value_template: '{{ states.switch.washing_machine.attributes["total_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'
-      washing_machine_volts:
-        friendly_name_template: "{{ states.switch.washing_machine.name}} Voltage"
-        value_template: '{{ states.switch.washing_machine.attributes["voltage"] | float }}'
-        unit_of_measurement: 'V'
-      washing_machine_today_kwh:
-        friendly_name_template: "{{ states.switch.washing_machine.name}} Today's Consumption"
-        value_template: '{{ states.switch.washing_machine.attributes["today_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'
+        device_class: "energy"
+        value_template: >
+          {% if states('sensor.power_usage') | int > 0 %}
+            {{ states('sensor.power_usage') }}
+          {% else -%}
+            0
+          {% endif %}
 
-      tumble_dryer_amps:
-        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Current"
-        value_template: '{{ states.switch.tumble_dryer.attributes["current_a"] | float }}'
-        unit_of_measurement: 'A'
-      tumble_dryer_watts:
-        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Current Consumption"
-        value_template: '{{ states.switch.tumble_dryer.attributes["current_power_w"] | float }}'
+      ### Calculate the negative Watts for return
+      power_return_negative:
+        unique_id: power_return_negative
         unit_of_measurement: 'W'
-      tumble_dryer_kwh:
-        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Total Consumption"
-        value_template: '{{ states.switch.tumble_dryer.attributes["total_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'
-      tumble_dryer_volts:
-        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Voltage"
-        value_template: '{{ states.switch.tumble_dryer.attributes["voltage"] | float }}'
-        unit_of_measurement: 'V'
-      tumble_dryer_today_kwh:
-        friendly_name_template: "{{ states.switch.tumble_dryer.name}} Today's Consumption"
-        value_template: '{{ states.switch.tumble_dryer.attributes["today_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'
-        
-      dishwasher_amps:
-        friendly_name_template: "{{ states.switch.dishwasher.name}} Current"
-        value_template: '{{ states.switch.dishwasher.attributes["current_a"] | float }}'
-        unit_of_measurement: 'A'
-      dishwasher_watts:
-        friendly_name_template: "{{ states.switch.dishwasher.name}} Current Consumption"
-        value_template: '{{ states.switch.dishwasher.attributes["current_power_w"] | float }}'
-        unit_of_measurement: 'W'
-      dishwasher_kwh:
-        friendly_name_template: "{{ states.switch.dishwasher.name}} Total Consumption"
-        value_template: '{{ states.switch.dishwasher.attributes["total_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'
-      dishwasher_volts:
-        friendly_name_template: "{{ states.switch.dishwasher.name}} Voltage"
-        value_template: '{{ states.switch.dishwasher.attributes["voltage"] | float }}'
-        unit_of_measurement: 'V'
-      dishwasher_today_kwh:
-        friendly_name_template: "{{ states.switch.dishwasher.name}} Today's Consumption"
-        value_template: '{{ states.switch.dishwasher.attributes["today_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'        
+        device_class: "energy"
+        value_template: >
+          {% if states('sensor.power_usage') | int > 0 %}
+            0
+          {% else -%}
+            {{ (states('sensor.power_usage') | float ) | abs }}
+          {% endif %}
 
-      computer_array_amps:
-        friendly_name_template: "{{ states.switch.computer_array.name}} Current"
-        value_template: '{{ states.switch.computer_array.attributes["current_a"] | float }}'
-        unit_of_measurement: 'A'
-      computer_array_watts:
-        friendly_name_template: "{{ states.switch.computer_array.name}} Current Consumption"
-        value_template: '{{ states.switch.computer_array.attributes["current_power_w"] | float }}'
+      ### Calculate the total amount of energy used (including solar)
+      power_total_usage:
+        unique_id: power_total_usage
         unit_of_measurement: 'W'
-      computer_array_kwh:
-        friendly_name_template: "{{ states.switch.computer_array.name}} Total Consumption"
-        value_template: '{{ states.switch.computer_array.attributes["total_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'
-      computer_array_volts:
-        friendly_name_template: "{{ states.switch.computer_array.name}} Voltage"
-        value_template: '{{ states.switch.computer_array.attributes["voltage"] | float }}'
-        unit_of_measurement: 'V'
-      computer_array_today_kwh:
-        friendly_name_template: "{{ states.switch.computer_array.name}} Today's Consumption"
-        value_template: '{{ states.switch.computer_array.attributes["today_energy_kwh"] | float }}'
-        unit_of_measurement: 'kWh'   
+        device_class: "energy"
+        value_template: >
+          {{ states("sensor.power_usage_positive") |float(0)
+           + states("sensor.solar_power") |float(0)
+           - states("sensor.power_return_negative") |float(0) }}
+
+      ### Calculate the total amount of energy used and generated (including solar)
+      power_total_generated:
+        unique_id: power_total_generated
+        unit_of_measurement: 'W'
+        device_class: "energy"
+        value_template: >
+          {{ states("sensor.power_usage_positive") |float(0)
+           + states("sensor.solar_power") | float(0) }}
+  
+
+### Waste Collection Sensor
+  - platform: waste_collection_schedule
+    source_index: 0
+    name: Horsham Bin Collection
+
+  - platform: waste_collection_schedule
+    name: waste_next_rubbish_collection
+    value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}{{value.daysTo}} days{% endif %}'
+    types:
+      - "Rubbish"
+
+  - platform: waste_collection_schedule
+    name: waste_next_recycle_collection
+    value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}{{value.daysTo}} days{% endif %}'
+    types:
+      - "Recycling"
+
+  - platform: waste_collection_schedule
+    name: waste_next_garden_collection
+    value_template: '{% if value.daysTo == 0 %}Today{% elif value.daysTo == 1 %}Tomorrow{% else %}{{value.daysTo}} days{% endif %}'
+    types:
+      - "Garden Waste"

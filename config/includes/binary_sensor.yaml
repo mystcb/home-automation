@@ -1,112 +1,44 @@
-# Front Door Switche
-  - platform: mqtt
-    name: "Front Door"
-    state_topic: "hallway/frontdoor/state"
-    device_class: "door"
-    
-# Conservatory Door Switches
-  - platform: mqtt
-    name: "Conservatory Doors"
-    state_topic: "conservatory/conservatorydoor/state"
-    device_class: "door"  
-    
-# Doorbell
-  - platform: mqtt
-    name: "Front Doorbell"
-    state_topic: "hallway/doorbell/state"
-    
-# PIR Movement Sensor
-  - platform: mqtt
-    name: "Test Movement Sensor"
-    state_topic: "testing/test/state"
-    device_class: motion
-    availability_topic: "testing/test/status"
+##########
+# Binary Sensors for the house
+##########
 
-# Sensor Online Check
-  - platform: ping
-    name: "Orange Room Sensor Check"
-    host: !secret orange_sensor_host
-    count: 2
-    scan_interval: 30
-  - platform: ping
-    name: "Hallway Sensor Check"
-    host: !secret hallway_sensor_host
-    count: 2
-    scan_interval: 30
+
+### Pingable hosts - Sensors
+
+  # Power Sensor (ICMP)
   - platform: ping
     name: "Power Sensor Check"
     host: !secret power_sensor_host
     count: 2
-    scan_interval: 30
-  - platform: ping
-    name: "Bedroom Sensor Check"
-    host: !secret bedroom_sensor_host
-    count: 2
-    scan_interval: 30
-  - platform: ping
-    name: "Conservatory Sensor Check"
-    host: !secret conservatory_sensor_host
-    count: 2
-    scan_interval: 30    
-  - platform: ping
-    name: "Garage Sensor Check"
-    host: !secret garage_sensor_host
-    count: 2
-    scan_interval: 30  
-  - platform: ping
-    name: "Sakura Status Check"
-    host: !secret sakura_sensor_host
-    count: 2
-    scan_interval: 30
-  - platform: ping
-    name: "Asuka Status Check"
-    host: !secret asuka_sensor_host
-    count: 2
-    scan_interval: 30
-    
-  - platform: template
-    sensors:
-      # Who is home?
-      no_one_home:
-        friendly_name: Anyone Home
-        value_template: >
-          {{ not is_state("person.colin_barker", "home") }}
-          
-      # Washing Machine Status
-      washing_machine:
-        friendly_name: Washing Machine
-        value_template: >
-          {{ states("sensor.washing_machine_watts") | float(0) > 3 }}
-        delay_off: "00:04:00"
-        icon_template: >
-          {% if is_state("binary_sensor.washing_machine", "on") %}
-            mdi:washing-machine
-          {% else %}
-            mdi:washing-machine-off
-          {% endif %}
 
-      # Tumble Dryer Status
-      tumble_dryer:
-        friendly_name: Tumble Dryer
-        value_template: >
-          {{ states("sensor.tumble_dryer_watts") | float(0) > 50 }}
-        delay_off: "00:04:00"
-        icon_template: >
-          {% if is_state("binary_sensor.tumble_dryer", "on") %}
-            mdi:tumble-dryer
-          {% else %}
-            mdi:tumble-dryer-off
-          {% endif %}
+  # Solar Sensor (ICMP)
+  - platform: ping
+    name: "Solar Sensor Check"
+    host: !secret solar_sensor_host
+    count: 2
 
-      # Tumble Dryer Status
-      dishwasher:
-        friendly_name: Dishwasher
-        value_template: >
-          {{ states("sensor.dishwasher_watts") | float(0) > 5 }}
-        delay_off: "00:04:00"
-        icon_template: >
-          {% if is_state("binary_sensor.dishwasher", "on") %}
-            mdi:dishwasher
-          {% else %}
-            mdi:dishwasher-off
-          {% endif %}
+  # Loft01 Sensor (ICMP)
+  - platform: ping
+    name: "Loft01 Sensor Check"
+    host: !secret loft01_sensor_host
+    count: 2
+
+  # Office Sensor (ICMP)
+  - platform: ping
+    name: "Office Sensor Check"
+    host: !secret office_sensor_host
+    count: 2
+
+### Pingable hosts - Server
+
+  # Server 1 (ICMP)
+  - platform: ping
+    name: "Server 1"
+    host: !secret server1_host
+    count: 2
+
+  # Server 2 (ICMP)
+  - platform: ping
+    name: "Server 2"
+    host: !secret server2_host
+    count: 2

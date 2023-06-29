@@ -1,0 +1,11 @@
+sources:
+  - name: horsham_gov_uk
+    args:
+      uprn: "123456789012"
+    customize:
+      - type: "Refuse Bin for Non-Recycling"
+        alias: "Rubbish"
+      - type: "Blue-Top Bin for Recycling"
+        alias: "Recycling"
+      - type: "Brown-Top Bin for Garden Waste"
+        alias: "Garden Waste"

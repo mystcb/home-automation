@@ -159,10 +159,9 @@
     - name: Install the FlightRadar24 Tracker
       when: fr24 == "yes"
       block:
-        - name: Install the FlightRadar GPG key from the key server
-          apt_key:
-            keyserver: pool.sks-keyservers.net
-            id: C969F07840C430F5
+        - name: Copy the FlightRadar24 repo key to the trusted.gpg.d folder
+          copy: src=files/fr24repo.gpg dest=/etc/apt/trusted.gpg.d/fr24repo.gpg owner=root group=root mode=0644
+
         - name: Add the FlightRadar24 repo to the sources list
           apt_repository:
             repo: deb http://repo.feed.flightradar24.com flightradar24 raspberrypi-stable
@@ -170,7 +169,7 @@
             update_cache: yes
         - name: Install the fr24feed service
           apt:
-            name: fr24feed
+            name: fr24feed:armhf
             state: present
         - name: Copy the fr24feed configuration file
           template: src=templates/fr24feed.ini.j2 dest=/etc/fr24feed.ini owner=root group=root mode=0644
@@ -186,35 +185,29 @@
     - name: Install PiAware Flight Tracker
       when: piaware == "yes"
       block: 
-        - name: Copy over the abcd567 GPG key to the Pi Home Folder
-          copy: src=binary/abcd567-KEY.gpg dest=/home/pi/abcd567-KEY.gpg owner=pi group=pi mode=0644      
-        - name: Install the abcd567 GPG key from the file§
-          apt_key:
-            file: /home/pi/abcd567-KEY.gpg
-            state: present
-        - name: Add the abcd567a repo to the sources list
-          apt_repository:
-            repo: deb https://abcd567a.github.io/ppa/piaware ./
-            state: present
-            update_cache: yes
-        - name: Install the piaware services
+
+        - name: Copy the abcd567a repo key to the trusted.gpg.d folder
+          copy: src=files/abcd567a.gpg dest=/etc/apt/trusted.gpg.d/abcd567a.gpg owner=root group=root mode=0644
+
+        - name: Copy the abcd567a repo definition to the sources.list.d folder
+          copy: src=files/abcd567a.list dest=/etc/apt/sources.list.d/abcd567a.list owner=root group=root mode=0644   
+
+        - name: Update apt packages for the new repo
+          apt: update_cache=yes upgrade=no
+
+        # - name: Copy the FlightAware repo key to the trusted.gpg.d folder
+        #   copy: src=files/flightawarerepo.gpg dest=/etc/apt/trusted.gpg.d/flightawarerepo.gpg owner=root group=root mode=0644
+
+        # - name: Add the PiAware repo to the sources list
+        #   apt_repository:
+        #     repo: deb http://uk.flightaware.com/adsb/piaware/files/packages bullseye piaware
+        #     state: present
+        #     update_cache: yes
+        - name: Install the piaware service
           apt:
-            name: 
-              - piaware
-            state: present
-        #- name: Install the PiAware GPG key from the key server
-        #  apt_key:
-        #    keyserver: keyserver.ubuntu.com
-        #    id: B931BB28DE85F0DD
-        #- name: Add the PiAware repo to the sources list
-        #  apt_repository:
-        #    repo: deb http://flightaware.com/adsb/piaware/files/packages bullseye piaware
-        #    state: present
-        #    update_cache: yes
-        #- name: Install the piaware service
-        #  apt:
-        #    name: piaware
-        #    state: present
+           name: 
+             - piaware
+           state: present
         - name: Copy the piaware configuration file
           template: src=templates/piaware.conf.j2 dest=/etc/piaware.conf owner=root group=root mode=0644
           register: piaware_config

@@ -1,42 +1,34 @@
-# Core Configuration
+
+# Loads default set of integrations. Do not remove.
 homeassistant: !include includes/homeassistant.yaml
 default_config:
 frontend:
   themes: !include_dir_merge_named themes
-discovery:
-api:
+  extra_module_url:
+    - /hacsfiles/lovelace-card-mod/card-mod.js
+    
+# HTTP Configurations
 http: !include includes/http.yaml
-#logger: !include includes/logger.yaml
+api:
 
 # Database Configuration
 recorder: !include includes/recorder.yaml
 influxdb: !include includes/influxdb.yaml
 
-# UI Elements
-script: !include scripts.yaml
-automation: !include automations.yaml
-#automation old: !include_dir_merge_list automations
-
-group: !include includes/groups.yaml
-weather: !include includes/weather.yaml
-intent_script: !include includes/intent_script.yaml
+# Manual Addons
+alexa: !include includes/alexa.yaml
 device_tracker: !include includes/device_tracker.yaml
-light: !include includes/lights.yaml
-zone: !include includes/zones.yaml
+mqtt: !include includes/mqtt.yaml
 sensor: !include includes/sensor.yaml
 binary_sensor: !include includes/binary_sensor.yaml
-input_boolean: !include includes/input_boolean.yaml
-homekit: !include includes/homekit.yaml
-alexa: !include includes/alexa.yaml
 alarm_control_panel: !include includes/alarm_control_panel.yaml
-hive: !include includes/hive.yaml
-climate: !include includes/climate.yaml
-media_player: !include includes/media_player.yaml
-ifttt: !include includes/ifttt.yaml
-ios: !include includes/ios.yaml
-tplink: !include includes/tplink.yaml
-spotify: !include includes/spotify.yaml
-mailgun: !include includes/mailgun.yaml
-notify: !include includes/notify.yaml
-lametric: !include includes/lametric.yaml
-camera: !include includes/camera.yaml
+homekit: !include includes/homekit.yaml
+waste_collection_schedule: !include includes/waste_collection_schedule.yaml
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml

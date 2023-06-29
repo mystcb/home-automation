@@ -1,2 +1,0 @@
-client_id: !secret lametric_client_id
-client_secret: !secret lametric_client_secret
