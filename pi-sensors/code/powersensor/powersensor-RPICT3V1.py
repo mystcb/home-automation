@@ -16,7 +16,14 @@ import sys
 
 # Setup arguments for use with the CLI
 parser = argparse.ArgumentParser()
-parser.add_argument('-C', '--config', required=True, default=str("config.json"), help="location of the config file (json)", metavar="file")
+parser.add_argument(
+    '-C', 
+    '--config', 
+    required=True, 
+    default=str("config.json"), 
+    help="location of the config file (json)", 
+    metavar="file"
+    )
 
 args, unknown = parser.parse_known_args()
 
@@ -68,6 +75,8 @@ try:
         try:
             # Read in the whole line from the seial connector
             sensorData = ser.readline().decode("utf-8")
+            if "interval" in sensorData:
+                continue
         except:
             time.sleep(5)
             continue
@@ -77,18 +86,23 @@ try:
         comma = False
         # Initial part of the Payload JSON
         payload = "{"
-        # Loop over all entries from the delimited split
-        for i in range(len(z)):
+        # Sensor data addition
+        pointer = 0
+        # Loop over the three sensors (1-4 as numbers start at 0!)
+        for i in range(1,4):
+            # Set the starting point for the sensor data (1-5 = Sensor 1, 6-10 = Sensor 2, 11 - 15 = Sensor 3)
+            sensorStart = i + pointer
             # Check config, if sensor is enabled then continue
             if i in data['enableSensor']:
                 # Check to see if a comma is required
                 if comma:
                     payload += ", "
                 # Generate the main part of the payload
-                #print("Power usage on sensor %d: %s W" % (i,z[i]))
-                payload +=  "\"sensor{0}\": {1}".format(i, z[i])
+                print("RealPower usage on sensor %d: %s W" % (i, z[sensorStart]))
+                payload += "\"sensor{0}\": {1}".format(i, z[sensorStart])
                 # Set the comma required for true, for the next loop
                 comma = True
+            pointer += 4
         # Finish off the Payload JSON
         payload += "}"
         # Publush the sensor data into MQTT
@@ -98,7 +112,7 @@ try:
             print("Message not sent: " + str(msg.rc))
         # Sleep for a second to allow the system to catch up
         time.sleep(1)
-        
+
 except KeyboardInterrupt:
     pass
 
